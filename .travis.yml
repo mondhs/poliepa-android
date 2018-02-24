@@ -26,4 +26,4 @@ android:
     #- sys-img-armeabi-v7a-android-27
 
 
-script: ./gradlew test
+script: ./gradlew --daemon test

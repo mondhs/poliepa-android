@@ -12,7 +12,12 @@ def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
 
 // Load your keystore.properties file into the keystoreProperties object.
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+try {
+  keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+} catch (IOException e) {
+  System.out.println("we cool with this: ");
+  e.printStackTrace();
+}
 
 android {
     signingConfigs {
