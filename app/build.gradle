@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
-/*
+
 // Create a variable called keystorePropertiesFile, and initialize it to your
 // keystore.properties file, in the rootProject folder.
 def keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -16,21 +16,23 @@ def keystoreProperties = new Properties()
 try {
   keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 } catch (IOException e) {
-  System.out.println("we cool with this: ");
-  e.printStackTrace();
+  System.err.println("Release keystore not found. we will use debug one \$HOME/.android/debug.keystore");
+//  e.printStackTrace();
+    keystoreProperties['storeFile']= System.getenv("HOME")+"/.android/debug.keystore"
+
 }
 
-*/
+
 
 android {
-    /*signingConfigs {
-        config {
+    signingConfigs {
+        release {
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
             storeFile file(keystoreProperties['storeFile'])
             storePassword keystoreProperties['storePassword']
         }
-    }*/
+    }
     compileSdkVersion 26
     defaultConfig {
         applicationId "io.github.mondhs.poliepa"
@@ -39,13 +41,12 @@ android {
         versionCode 2
         versionName '1.2'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-//        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            signingConfig signingConfigs.config
+            signingConfig signingConfigs.release
         }
     }
     productFlavors {
