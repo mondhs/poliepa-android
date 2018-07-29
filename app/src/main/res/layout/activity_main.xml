@@ -13,13 +13,13 @@
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:ems="10"
-        android:labelFor="@id/caption_text"
-        app:layout_constraintBaseline_toBaselineOf="@+id/caption_text"
+        android:labelFor="@id/ui_caption_text"
+        app:layout_constraintBaseline_toBaselineOf="@+id/ui_caption_text"
         app:layout_constraintStart_toStartOf="parent"
         android:text="Tark" />
 
     <EditText
-        android:id="@+id/caption_text"
+        android:id="@+id/ui_caption_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -34,7 +34,7 @@
 
 
     <TextView
-        android:id="@+id/result_text_label"
+        android:id="@+id/ui_result_text_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -42,10 +42,10 @@
 
         android:text="Atpažinau"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/caption_text" />
+        app:layout_constraintTop_toBottomOf="@+id/ui_caption_text" />
 
     <ProgressBar
-        android:id="@+id/recognitionResultVIew"
+        android:id="@+id/ui_recognition_result_view"
         style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal"
         android:layout_width="0dp"
         android:layout_height="14dp"
@@ -54,13 +54,13 @@
         android:layout_marginTop="16dp"
         android:max="100"
         android:progress="0"
-        app:layout_constraintEnd_toStartOf="@+id/resultStat"
-        app:layout_constraintStart_toEndOf="@+id/result_text_label"
-        app:layout_constraintTop_toBottomOf="@+id/caption_text" />
+        app:layout_constraintEnd_toStartOf="@+id/ui_result_stat"
+        app:layout_constraintStart_toEndOf="@+id/ui_result_text_label"
+        app:layout_constraintTop_toBottomOf="@+id/ui_caption_text" />
 
 
     <EditText
-        android:id="@+id/result_text"
+        android:id="@+id/ui_result_text"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="16dp"
@@ -72,13 +72,13 @@
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
         android:textColor="#000000"
         android:textSize="42sp"
-        app:layout_constraintBottom_toTopOf="@+id/resultList"
+        app:layout_constraintBottom_toTopOf="@+id/ui_result_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recognitionResultVIew" />
+        app:layout_constraintTop_toBottomOf="@+id/ui_recognition_result_view" />
 
         <ListView
-            android:id="@+id/resultList"
+            android:id="@+id/ui_result_list"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="16dp"
@@ -88,24 +88,24 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/result_text"
+            app:layout_constraintTop_toBottomOf="@+id/ui_result_text"
             app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
-        android:id="@+id/recordIndication"
+        android:id="@+id/ui_record_indication"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/result_text"
+        app:layout_constraintBottom_toTopOf="@+id/ui_result_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/caption_text"
+        app:layout_constraintTop_toBottomOf="@+id/ui_caption_text"
         app:srcCompat="@android:drawable/ic_btn_speak_now"
          />
 
     <EditText
-        android:id="@+id/resultStat"
+        android:id="@+id/ui_result_stat"
         android:layout_width="64dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -113,8 +113,8 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:enabled="false"
-        app:layout_constraintBottom_toTopOf="@+id/result_text"
-        app:layout_constraintEnd_toStartOf="@+id/recordIndication"
-        app:layout_constraintTop_toBottomOf="@+id/caption_text" />
+        app:layout_constraintBottom_toTopOf="@+id/ui_result_text"
+        app:layout_constraintEnd_toStartOf="@+id/ui_record_indication"
+        app:layout_constraintTop_toBottomOf="@+id/ui_caption_text" />
 
 </android.support.constraint.ConstraintLayout>

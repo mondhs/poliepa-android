@@ -1,5 +1,30 @@
 <resources>
-    <string name="app_name">Po Liepa</string>
+    <string name="app_name">Liepa Rinktuvas</string>
     <string name="kws_caption">Tarkit \"mano komandas\".</string>
     <string name="liepa_cmd">Pvz: \"labas\", \"kiek kainuoja\", \"ar tu kalbi angliškai\".</string>
+    <string name="INIT_MESSAGE">Ruošiamas atpažintuvas</string>
+    <string name="validation_empty">\"Reikia pataisyti duomenis\"</string>
+    <string name="USER_NAME">Vartotojo vardas</string>
+    <string name="GREET_MESSAGE">    Projekte Liepa-2 rūpinamės lietuvių kalbos išsaugojimu. Prie to gali prisdėti ir tu! Prisijunk prie mūsų ir tavo balsas bus išsaugotas ateičiai. \n    Renkame tik garso signalus anonimiškai. Tavo amžius ir lytis leis mums tirti kalbą tiksliau.</string>
+    <string-array name="age_group_array">
+        <item>iki 10</item>
+        <item>10-20</item>
+        <item>20-30</item>
+        <item>30-40</item>
+        <item>40-50</item>
+        <item>50-60</item>
+        <item>60-70</item>
+        <item>70-80</item>
+        <item>80-90</item>
+        <item>90-100</item>
+        <item>100 ir daugiau</item>
+        <item>Nesakysiu(bet mums labai svabu) </item>
+    </string-array>
+
+    <string-array name="gender_array">
+        <item>Moteris</item>
+        <item>Vyras</item>
+        <item>Kita</item>
+        <item>Neatskleisiu(bet mums labai svabu) </item>
+    </string-array>
 </resources>

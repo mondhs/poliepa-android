@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="PHONE_ID_KEY">100</integer>
+</resources>

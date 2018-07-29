@@ -33,9 +33,9 @@ android {
             storePassword keystoreProperties['storePassword']
         }
     }
-    compileSdkVersion 26
+    compileSdkVersion 27
     defaultConfig {
-        applicationId "io.github.mondhs.poliepa"
+        applicationId "io.github.mondhs.liepa.rintkuvas"
         minSdkVersion 18
         targetSdkVersion 26
         versionCode 3
@@ -58,10 +58,11 @@ dependencies {
     //    implementation project(':aars')
     implementation project(':models')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation "org.jetbrains.anko:anko:$anko_version"
+    implementation "org.jetbrains.anko:anko-commons:$anko_version"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
