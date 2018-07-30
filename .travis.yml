@@ -9,8 +9,8 @@ before_install:
   - mkdir "$ANDROID_HOME/licenses" || true
     - echo -e "\nd56f5187479451eabf01fb78af6dfcb131a6481e" > "$ANDROID_HOME/licenses/android-sdk-license"
   - yes | sdkmanager "platforms;android-27"
-  - yes |sdkmanager tools
-  #- yes |sdkmanager "system-images;android-27;default;armeabi-v7a"
+  - yes | sdkmanager tools
+
 
 android:
   components:
@@ -24,15 +24,6 @@ android:
 
     # The SDK version used to compile your project
     - android-27
-#    - android-26
-#    - android-25
-#    - android-24
-#    - android-23
-#    - android-22
-#    - android-21
-#    - android-20
-#    - android-19
-#    - android-18
   licenses:
     - 'android-sdk-license-.+'
     - '.+'
