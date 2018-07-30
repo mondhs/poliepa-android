@@ -1,4 +1,4 @@
-package io.github.mondhs.liepa.rinktuvas
+package io.github.mondhs.poliepa
 
 import android.content.SharedPreferences
 import android.util.Log
@@ -53,7 +53,7 @@ class LiepaRecognitionContext{
     var userName: String = ""
     var userAgeGroup: String = ""
     var userGender: String = ""
-    var internetEnabled: Boolean = false
+    var internetEnabled: Boolean = true
 
 
 
@@ -65,7 +65,12 @@ class LiepaTransportHelper {
     val TAG= "LiepaTransportHelper"
 
     fun prepareForRecognition(audioDir:File){
-        require(audioDir.exists() && audioDir.isDirectory)
+
+        if (!(audioDir.exists() && audioDir.isDirectory)) {
+            Log.i(TAG, "Dir does not exists: " + audioDir.absolutePath)
+            return
+        }
+
         audioDir.walk().filter { it.name.endsWith("raw") }.forEach {
                 Log.i( TAG, "[prepareForRecognition]Deleted: $it"  )
                 it.delete()
@@ -78,13 +83,13 @@ class LiepaTransportHelper {
         val requestedText  = context.previousPhraseText
         val recognizedText:String = hypothesis?.hypstr?.toString() ?: "";
 
-        Log.i(TAG,"processAudioFile+++")
+        Log.i(TAG,"processAudioFile+++ internet enabled: ${context.internetEnabled}")
         var fileCount = 0
         require(audioDir.exists() && audioDir.isDirectory)
         //look at all files thats ends with .raw. sort higher number first. remove first as it is current wich system is working with
         audioDir.walk().filter { it.name.endsWith("raw") }.sortedByDescending { it.name}.drop(1).forEach {
                 fileCount++
-                if(fileCount==1) {
+                if(context.internetEnabled && fileCount==1) {
                     Log.i( TAG, "[processAudioFile]Sending: $it"  )
                     val url = URL("https://lieparinktuvas-1530815329656.appspot.com/upload")
                     val workingFile = File(audioDir, UUID.randomUUID().toString() + ".audio")
@@ -148,8 +153,12 @@ class LiepaRecognitionHelper{
      * Initialize context to track recognition results
      * @return new context instance
      */
-    fun initContext(liepaCommandFile: File, audioDir:File, sharedPref :SharedPreferences): LiepaRecognitionContext {
+    fun initContext(assetsDir:File, sharedPref :SharedPreferences): LiepaRecognitionContext {
         var ctx = LiepaRecognitionContext()
+        val audioDir = File(assetsDir, "audio/")
+        // Create grammar-based search for digit recognition
+        val liepaCommandFile = File(assetsDir, "liepa_commands.gram")
+
         ctx.liepaCommandFile = liepaCommandFile
         val liepaCommandFileContent = liepaCommandFile.readText()
         ctx.allCommandList.addAll(this.parseGrammar(liepaCommandFileContent))

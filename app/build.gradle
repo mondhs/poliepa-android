@@ -35,11 +35,11 @@ android {
     }
     compileSdkVersion 27
     defaultConfig {
-        applicationId "io.github.mondhs.liepa.rintkuvas"
+        applicationId "io.github.mondhs.poliepa"
         minSdkVersion 18
         targetSdkVersion 26
-        versionCode 3
-        versionName '1.2'
+        versionCode 5
+        versionName '2.1'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

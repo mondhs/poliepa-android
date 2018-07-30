@@ -1,4 +1,4 @@
-package io.github.mondhs.liepa.rinktuvas
+package io.github.mondhs.poliepa
 
 import android.media.AudioAttributes
 import android.media.AudioManager

@@ -1,4 +1,4 @@
-package io.github.mondhs.liepa.rinktuvas
+package io.github.mondhs.poliepa
 
 import android.Manifest
 import android.app.AlertDialog
@@ -38,7 +38,7 @@ private const val LIEPA_CMD = "liepa_commands"
 
 /* Used to handle permission request */
 private const val PERMISSIONS_REQUEST_RECORD_AUDIO = 1
-private const val PERMISSIONS_REQUEST_INTERNET = 2
+
 
 class MainActivity : AppCompatActivity(), RecognitionListener, AnkoLogger {
 
@@ -62,34 +62,43 @@ class MainActivity : AppCompatActivity(), RecognitionListener, AnkoLogger {
 
 
         Log.e(TAG, "[onCreate]+++")
+        val aLiepaCtx = initContext()
+        liepaContext = aLiepaCtx
 
         ui_caption_text.setText(getString(R.string.INIT_MESSAGE))
 
+    }
+
+    /**
+     *
+     */
+    private fun initContext(): LiepaRecognitionContext {
         val assets = Assets(this)
         val assetsDir = assets.syncAssets()
-        val audioDir = File(assetsDir, "audio/")
-        // Create grammar-based search for digit recognition
-        val liepaCommandFile = File(assetsDir, "liepa_commands.gram")
-        //initialize recognition result tracking context
-        liepaContext = liepaHelper.initContext(liepaCommandFile, audioDir,this.getPreferences(Context.MODE_PRIVATE))
-
+        val aLiepaCtx =liepaHelper.initContext( assetsDir,this.getPreferences(Context.MODE_PRIVATE))
         ui_result_list.adapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, this.resultArray)
-
-
-
-
-
-
+        return aLiepaCtx
     }
+
 
     override fun onResume() {
         super.onResume()
-        if (liepaContext.prefAgreeTermsInd){
-            checkPermisionForRecognition()
-        }else{
-            showRegistryDialog(liepaContext,this.getPreferences(Context.MODE_PRIVATE))
+        Log.e(TAG, "[onResume]+++")
+        verificationProcedureBeforeLounch()
+
+    }
+
+    private fun verificationProcedureBeforeLounch(){
+        Log.e(TAG, "[verificationProcedureBeforeLounch]+++")
+        if (!liepaContext.prefAgreeTermsInd){
+            showRegistryDialog(liepaContext,this.getPreferences(Context.MODE_PRIVATE))//when is doen repeat this same logic again
+            return
         }
 
+        if(checkPermissionForRecognition()){
+            Log.e(TAG, "[onSuccess] Checked permission+++")
+            doRecognition()
+        }//else wait till it will be called #onRequestPermissionsResult() and we will repeat this same logic once again
     }
 
     private fun doRecognition() {
@@ -165,24 +174,7 @@ class MainActivity : AppCompatActivity(), RecognitionListener, AnkoLogger {
 
 
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        if (requestCode == PERMISSIONS_REQUEST_RECORD_AUDIO) {
-            if (grantResults.isNotEmpty()  && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Recognizer initialization is a time-consuming and it involves IO,
-                // so we execute it in async task
-                doRecognition()
-            } else {
-                finish()
-            }
-        } else if(requestCode == PERMISSIONS_REQUEST_INTERNET){
-            if (grantResults.isNotEmpty()  && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                liepaContext.internetEnabled = true
-            }
-        }
-
-    }
 
     private fun switchSearch(searchName: String) {
         Log.i(TAG, "[switchSearch]+++")
@@ -211,8 +203,6 @@ class MainActivity : AppCompatActivity(), RecognitionListener, AnkoLogger {
             ui_result_stat.setText("%d/%d".format(liepaContext.phrasesCorrectNum, liepaContext.phrasesTestedNum))
             if(liepaContext.lastRecognitionWordsFound) {
                 liepaTransportHelper.processAudioFile(liepaContext, hypothesis, recognizedCorrectly);
-//            }else{
-//                liepaTransportHelper.prepareForRecognition(liepaContext.audioDir)
             }
 //            this.recognizer?.decoder?.lattice?.write(liepaContext.audioDir.path)
 //            this.recognizer?.decoder?.lattice?.writeHtk(liepaContext.audioDir.path)
@@ -322,7 +312,8 @@ class MainActivity : AppCompatActivity(), RecognitionListener, AnkoLogger {
 
                         LiepaRecognitionHelper().writeContext(liepaContext, preferences)
 
-                        checkPermisionForRecognition()
+                        verificationProcedureBeforeLounch()
+
                         dialog.dismiss()
                     } else {
                         // do something
@@ -340,25 +331,33 @@ class MainActivity : AppCompatActivity(), RecognitionListener, AnkoLogger {
     /**
      * If access are granted it should  #onRequestPermissionsResult()
      */
-    private fun checkPermisionForRecognition() {
-        val permissionInternetCheck = ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.INTERNET)
-        if (permissionInternetCheck != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.INTERNET), PERMISSIONS_REQUEST_INTERNET)
-        }
-
+    private fun checkPermissionForRecognition(): Boolean {
+        Log.e(TAG, "[checkPermissionForRecognition]+++")
 
         val permissionAudioCheck = ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.RECORD_AUDIO)
         if (permissionAudioCheck != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,
                     arrayOf(Manifest.permission.RECORD_AUDIO),
                     PERMISSIONS_REQUEST_RECORD_AUDIO)
+            return false
+        }
+        return true
+    }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        Log.e(TAG, "[onRequestPermissionsResult]+++" + requestCode)
+
+        if (requestCode == PERMISSIONS_REQUEST_RECORD_AUDIO) {
+            if (grantResults.isNotEmpty()  && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //it will call onResume() after this logic is done
+                Log.e(TAG, "[onRequestPermissionsResult]+++Granted????" + requestCode)
+            } else {
+                longToast("Ačiū! Grįžktite jei norėsite prisidėti!")
+                finish()
+            }
         }
-        //if all granted start recognition. If not recogntion should be started after permission is granted
-        if(permissionInternetCheck == PackageManager.PERMISSION_GRANTED && permissionAudioCheck == PackageManager.PERMISSION_GRANTED){
-            liepaContext.internetEnabled = true
-            doRecognition()
-        }
+
     }
 
     /// Menu logic

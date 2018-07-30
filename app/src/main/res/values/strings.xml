@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Liepa Rinktuvas</string>
+    <string name="app_name">Poliepa rinktuvas</string>
     <string name="kws_caption">Tarkit \"mano komandas\".</string>
     <string name="liepa_cmd">Pvz: \"labas\", \"kiek kainuoja\", \"ar tu kalbi angliškai\".</string>
     <string name="INIT_MESSAGE">Ruošiamas atpažintuvas</string>
