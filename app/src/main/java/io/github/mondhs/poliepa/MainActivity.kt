@@ -10,19 +10,22 @@ import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.os.Handler
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ArrayAdapter
+import android.view.WindowManager
 import edu.cmu.pocketsphinx.Assets
 import edu.cmu.pocketsphinx.Hypothesis
 import edu.cmu.pocketsphinx.RecognitionListener
 import edu.cmu.pocketsphinx.SpeechRecognizer
 import edu.cmu.pocketsphinx.SpeechRecognizerSetup
-import org.jetbrains.anko.AnkoLogger
+import io.github.mondhs.poliepa.helper.LiepaRecognitionContext
+import io.github.mondhs.poliepa.helper.LiepaRecognitionHelper
+import io.github.mondhs.poliepa.helper.LiepaTransportHelper
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.uiThread
@@ -40,7 +43,7 @@ private const val LIEPA_CMD = "liepa_commands"
 private const val PERMISSIONS_REQUEST_RECORD_AUDIO = 1
 
 
-class MainActivity : AppCompatActivity(), RecognitionListener, AnkoLogger {
+class MainActivity : AppCompatActivity(), RecognitionListener {
 
     private val TAG = "MainActivity"
 
@@ -53,19 +56,39 @@ class MainActivity : AppCompatActivity(), RecognitionListener, AnkoLogger {
 
     private val liepaTransportHelper = LiepaTransportHelper()
 
-    private val resultArray = mutableListOf("")
 
+    private var uiThreadHandler: Handler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
+
 
 
         Log.e(TAG, "[onCreate]+++")
         val aLiepaCtx = initContext()
         liepaContext = aLiepaCtx
 
-        ui_caption_text.setText(getString(R.string.INIT_MESSAGE))
+            val generatedNextWord = liepaHelper.nextWord(liepaContext)
+
+            ui_record_indication.setOnClickListener{
+            if (recognizer != null) {
+                val requestRecordState = !liepaContext.isRecordingStarted
+                if(!requestRecordState){
+                    //if requesting stop, remove waiting indicator and kill thread.
+                    ui_new_phrase_progress.visibility = View.INVISIBLE
+                    uiThreadHandler.removeCallbacksAndMessages(null);
+                    if(liepaContext.prefRecognitionAutomationInd) {
+                        ui_pronounce_request_text.setText("")
+                    }
+
+                }
+                switchRecordingMode(requestRecordState, liepaContext, recognizer!!)
+            }
+        }
 
     }
 
@@ -76,20 +99,20 @@ class MainActivity : AppCompatActivity(), RecognitionListener, AnkoLogger {
         val assets = Assets(this)
         val assetsDir = assets.syncAssets()
         val aLiepaCtx =liepaHelper.initContext( assetsDir,this.getPreferences(Context.MODE_PRIVATE))
-        ui_result_list.adapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, this.resultArray)
+
         return aLiepaCtx
     }
 
 
     override fun onResume() {
         super.onResume()
-        Log.e(TAG, "[onResume]+++")
+        Log.i(TAG, "[onResume]+++")
         verificationProcedureBeforeLounch()
 
     }
 
     private fun verificationProcedureBeforeLounch(){
-        Log.e(TAG, "[verificationProcedureBeforeLounch]+++")
+        Log.i(TAG, "[verificationProcedureBeforeLounch]+++")
         if (!liepaContext.prefAgreeTermsInd){
             showRegistryDialog(liepaContext,this.getPreferences(Context.MODE_PRIVATE))//when is doen repeat this same logic again
             return
@@ -106,12 +129,12 @@ class MainActivity : AppCompatActivity(), RecognitionListener, AnkoLogger {
 
 
         val isRecognitionResultVisible:Int = if(liepaContext.prefRecognitionAutomationInd) View.VISIBLE else View.INVISIBLE
-
+//        ui_recognized_text.visibility = isRecognitionResultVisible
+//        caption_text_label.visibility = isRecognitionResultVisible
+        ui_pronounce_text_label.visibility = isRecognitionResultVisible
         ui_recognition_result_view.visibility =isRecognitionResultVisible
         ui_result_stat.visibility = isRecognitionResultVisible
-        ui_result_text.visibility = isRecognitionResultVisible
-        ui_result_list.visibility = isRecognitionResultVisible
-        ui_result_text_label.visibility = isRecognitionResultVisible
+
 
 
 
@@ -122,11 +145,8 @@ class MainActivity : AppCompatActivity(), RecognitionListener, AnkoLogger {
                 with(it) {
                     Log.i(TAG, "[doRecognition]+++")
                     it.setupRecognizer(liepaContext.audioDir.parentFile)
-                    it.switchSearch(LIEPA_CMD)
-                    val currentWord = liepaHelper.nextWord(liepaContext)
-                    ui_caption_text.setText(currentWord)
-                    liepaContext.isRecognitionActive =true
-                    longToast("Liepa klauso")
+                    if (recognizer != null) it.switchRecordingMode(false, liepaContext, recognizer!!)
+//                    longToast("Liepa klauso")
                 }
             }
 
@@ -148,6 +168,8 @@ class MainActivity : AppCompatActivity(), RecognitionListener, AnkoLogger {
 
         recognizer?.addGrammarSearch(LIEPA_CMD, liepaContext.liepaCommandFile)
         liepaTransportHelper.prepareForRecognition(liepaContext.audioDir)
+
+
     }
 
 
@@ -167,50 +189,109 @@ class MainActivity : AppCompatActivity(), RecognitionListener, AnkoLogger {
         recognizer?.let {
             it.cancel()
             it.shutdown()
-            liepaContext.isRecognitionActive = false
+            onRecordingStop()
+            liepaContext.isRecordingStarted = false
             longToast("Liepa nebegirdi")
         }
     }
 
 
-
-
-
-    private fun switchSearch(searchName: String) {
-        Log.i(TAG, "[switchSearch]+++")
+    private fun onRecordingStop(){
         ui_record_indication.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_ATOP)
-        recognizer?.stop()
-        recognizer?.startListening(searchName, 10000)
-        val currentWord = liepaHelper.nextWord(liepaContext)
-        ui_caption_text.setText(currentWord)
     }
+
+    private fun onRecordingStart(){
+        ui_record_indication.setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP)
+    }
+
+    private fun startRecordingWithDelay(recognizer: SpeechRecognizer,liepaContext: LiepaRecognitionContext){
+        val currentPhraseText = liepaContext.currentPhraseText
+        Log.i(TAG, "[startRecordingWithDelay]+++ $currentPhraseText")
+        val requestPhaseDelay =  liepaContext.requestPhaseDelayInSec*1000
+        val r = Runnable {
+            Log.i(TAG, "[startRecordingWithDelay] Handler +++ $currentPhraseText")
+            ui_new_phrase_progress.visibility = View.INVISIBLE
+            if(liepaContext.prefRecognitionAutomationInd){
+                ui_pronounce_request_text.setText(liepaContext.currentPhraseText)
+            }
+            recognizer.startListening(LIEPA_CMD, 10000)//phrase should be up to 10 seconds
+            Log.i(TAG, "[startRecordingWithDelay] Handler --- $currentPhraseText")
+        }
+        ui_new_phrase_progress.visibility = View.VISIBLE
+
+        uiThreadHandler.removeCallbacksAndMessages(null);
+        uiThreadHandler.postDelayed(r, requestPhaseDelay.toLong())
+        Log.i(TAG, "[startRecordingWithDelay]--- $currentPhraseText ")
+    }
+
+
+    private fun switchRecordingMode(requestRecordState:Boolean, liepaContext: LiepaRecognitionContext, recognizer: SpeechRecognizer){
+        val isRecordingStarted = requestRecordState
+        Log.i(TAG, "[switchRecordingMode]+++ $requestRecordState")
+        recognizer?.let {
+
+            if (requestRecordState && liepaContext.isRecordingStarted) {
+                if(liepaContext.prefRecognitionAutomationInd) {
+                    //for automatic continue recording
+                    it.stop()
+                    onRecordingStop()
+                    startRecordingWithDelay(it, liepaContext)
+                    onRecordingStart()
+                }else{
+                    //if it is recording and it was keep recording, assume we inverting indicator(stop recording)
+                    switchRecordingMode(false, liepaContext, recognizer)
+                }
+            }else if (requestRecordState && !liepaContext.isRecordingStarted) {
+                liepaContext.isRecordingStarted = true
+                startRecordingWithDelay(it, liepaContext)
+                onRecordingStart()
+            }else if (!requestRecordState && liepaContext.isRecordingStarted) {
+                //it is recording and requested to stop
+                liepaContext.isRecordingStarted = false
+                it.stop()
+                onRecordingStop()
+                if(!liepaContext.prefRecognitionAutomationInd) {
+                    //request new phrase
+                    ui_pronounce_request_text.setText(liepaContext.currentPhraseText)
+                }
+            }
+            Log.i(TAG, "[switchRecordingMode]--- $requestRecordState")
+        }
+
+    }
+
+
 
     /*************************
      * RecognitionListener
      */
     override fun onResult(hypothesis: Hypothesis?) {
         Log.i(TAG, "[onResult]+++")
-        ui_result_text.setText("")
         hypothesis?.let {
 
             val recognizedCorrectly: Boolean = liepaHelper.isRecognized(liepaContext.previousPhraseText, it.hypstr)
             val correctCmdRatio:Int = liepaHelper.updateRecognitionResult(liepaContext, it.hypstr)
-
-            val outText = "%s = %s (tikimybė: %d; geriausias balas: %d)\n"
-                    .format(it.hypstr, liepaContext.previousPhraseText, it.prob, it.bestScore )
 
             ui_recognition_result_view.progress = correctCmdRatio
             ui_result_stat.setText("%d/%d".format(liepaContext.phrasesCorrectNum, liepaContext.phrasesTestedNum))
             if(liepaContext.lastRecognitionWordsFound) {
                 liepaTransportHelper.processAudioFile(liepaContext, hypothesis, recognizedCorrectly);
             }
+            ui_recognized_text.setText("%s (Prašyta: %s)".format(it.hypstr, liepaContext.currentPhraseText))
+            //request new phrase
+            val generatedNextWord = liepaHelper.nextWord(liepaContext)
+            if(liepaContext.prefRecognitionAutomationInd) {
+                ui_pronounce_request_text.setText("")
+            }else{
+                ui_pronounce_request_text.setText(generatedNextWord)
+            }
+
+            //for automatic mode start again
+//            if(liepaContext.prefRecognitionAutomationInd){
+//                if(this.recognizer != null) switchRecordingMode(liepaContext, recognizer!!)
+//            }
 //            this.recognizer?.decoder?.lattice?.write(liepaContext.audioDir.path)
 //            this.recognizer?.decoder?.lattice?.writeHtk(liepaContext.audioDir.path)
-            this.resultArray.add(0, outText)
-            val adapter =  ui_result_list.adapter
-            if (adapter is ArrayAdapter<*>) {
-                adapter.notifyDataSetChanged()
-            }
 
         }
     }
@@ -218,19 +299,19 @@ class MainActivity : AppCompatActivity(), RecognitionListener, AnkoLogger {
     override fun onPartialResult(hypothesis: Hypothesis?) {
         hypothesis?.let{
             Log.i(TAG, "[onPartialResult]+++")
-            ui_result_text.setText(it.hypstr)
+            ui_recognized_text.setText(it.hypstr)
         }
 
     }
 
     override fun onTimeout() {
         Log.i(TAG, "[onTimeout]+++")
-        switchSearch(LIEPA_CMD)
+        if (recognizer != null) switchRecordingMode(true, liepaContext, recognizer!!) //assume continue recording always
     }
 
     override fun onBeginningOfSpeech() {
         Log.i(TAG, "[onBeginningOfSpeech]+++")
-        ui_record_indication.setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP)
+        onRecordingStart()
     }
 
     override fun onEndOfSpeech() {
@@ -241,13 +322,15 @@ class MainActivity : AppCompatActivity(), RecognitionListener, AnkoLogger {
             Log.i(TAG, String.format("Word %s[%d-%d]; ascore: %d; lback: %d; lscore:%d; prob: %d ",it.word, it.startFrame, it.endFrame, it.ascore, it.lback, it.lscore, it.prob))
         }
         liepaContext.lastRecognitionWordsFound = numberWordsWoSil > 2//do not count 2 segments of silence in beginning and end.
-        switchSearch(LIEPA_CMD)
+
+        if (recognizer != null) switchRecordingMode(true, liepaContext, recognizer!!)//assume continue recording always
+
 
     }
 
     override fun onError(error: Exception?) {
         Log.i(TAG, "[onError]+++ " + error?.message, error)
-        ui_caption_text.setText(error?.message)
+        ui_pronounce_request_text.setText(error?.message)
     }
 
     private fun showRegistryDialog(liepaContext: LiepaRecognitionContext, preferences: SharedPreferences) {
@@ -276,6 +359,7 @@ class MainActivity : AppCompatActivity(), RecognitionListener, AnkoLogger {
 
 
         view.ui_agree_terms_ind.isChecked = liepaContext.prefAgreeTermsInd
+        view.ui_send_to_cloud_ind.isChecked = liepaContext.prefSendToCloud
         view.ui_user_name.setText(liepaContext.userName)
         view.ui_user_gender.setSelection(genderIdx)
         view.ui_user_age_group.setSelection(ageGroupIdx)
@@ -309,6 +393,14 @@ class MainActivity : AppCompatActivity(), RecognitionListener, AnkoLogger {
                         liepaContext.userGender = view.ui_user_gender.selectedItem.toString()
                         liepaContext.userAgeGroup = view.ui_user_age_group.selectedItem.toString()
                         liepaContext.prefRecognitionAutomationInd = view.ui_show_recognition_ind.isChecked
+                        liepaContext.prefSendToCloud = view.ui_send_to_cloud_ind.isChecked
+
+                        if(liepaContext.prefRecognitionAutomationInd){
+                            liepaContext.requestPhaseDelayInSec = 3
+                        }else{
+                            liepaContext.requestPhaseDelayInSec = 0
+                        }
+
 
                         LiepaRecognitionHelper().writeContext(liepaContext, preferences)
 
@@ -322,8 +414,12 @@ class MainActivity : AppCompatActivity(), RecognitionListener, AnkoLogger {
         )
         dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener(
                 View.OnClickListener() {
-                    longToast("Ačiū! Grįžktite jei norėsite prisidėti!")
-                    finish()
+                    if(!liepaContext.prefAgreeTermsInd){
+                        longToast("Ačiū! Grįžktite jei norėsite prisidėti!")
+                        finish()
+                    }else{
+                        dialog.dismiss()
+                    }
                 }
         )
     }
@@ -332,7 +428,7 @@ class MainActivity : AppCompatActivity(), RecognitionListener, AnkoLogger {
      * If access are granted it should  #onRequestPermissionsResult()
      */
     private fun checkPermissionForRecognition(): Boolean {
-        Log.e(TAG, "[checkPermissionForRecognition]+++")
+        Log.i(TAG, "[checkPermissionForRecognition]+++")
 
         val permissionAudioCheck = ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.RECORD_AUDIO)
         if (permissionAudioCheck != PackageManager.PERMISSION_GRANTED){
@@ -346,12 +442,12 @@ class MainActivity : AppCompatActivity(), RecognitionListener, AnkoLogger {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        Log.e(TAG, "[onRequestPermissionsResult]+++" + requestCode)
+        Log.i(TAG, "[onRequestPermissionsResult]+++" + requestCode)
 
         if (requestCode == PERMISSIONS_REQUEST_RECORD_AUDIO) {
             if (grantResults.isNotEmpty()  && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 //it will call onResume() after this logic is done
-                Log.e(TAG, "[onRequestPermissionsResult]+++Granted????" + requestCode)
+                Log.i(TAG, "[onRequestPermissionsResult]+++Granted????" + requestCode)
             } else {
                 longToast("Ačiū! Grįžktite jei norėsite prisidėti!")
                 finish()
@@ -379,6 +475,7 @@ class MainActivity : AppCompatActivity(), RecognitionListener, AnkoLogger {
         }
         return super.onOptionsItemSelected(item)
     }
+
 
 
 }

@@ -1,9 +1,9 @@
 package io.github.mondhs.poliepa
 
+import io.github.mondhs.poliepa.helper.LiepaRecognitionHelper
 import org.junit.Test
 
 import org.junit.Assert.*
-import org.junit.Ignore
 
 /**
  * Example local unit test, which will execute on the development machine (host).

@@ -89,6 +89,15 @@
                 android:textOn="Įjungta" />
 
             <Switch
+                android:id="@+id/ui_send_to_cloud_ind"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Signalo užsaugojimas"
+                android:textOff="išjungta"
+                android:textOn="Įjungta" />
+
+            <Switch
                 android:id="@+id/ui_agree_terms_ind"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

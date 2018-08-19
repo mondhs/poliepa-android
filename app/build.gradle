@@ -4,7 +4,6 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
-
 // Create a variable called keystorePropertiesFile, and initialize it to your
 // keystore.properties file, in the rootProject folder.
 def keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -14,11 +13,11 @@ def keystoreProperties = new Properties()
 
 // Load your keystore.properties file into the keystoreProperties object.
 try {
-  keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 } catch (IOException e) {
-  System.err.println("Release keystore not found. we will use debug one \$HOME/.android/debug.keystore");
+    System.err.println("Release keystore not found. we will use debug one \$HOME/.android/debug.keystore");
 //  e.printStackTrace();
-    keystoreProperties['storeFile']= System.getenv("HOME")+"/.android/debug.keystore"
+    keystoreProperties['storeFile'] = System.getenv("HOME") + "/.android/debug.keystore"
 
 }
 
@@ -63,6 +62,7 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation "org.jetbrains.anko:anko:$anko_version"
     implementation "org.jetbrains.anko:anko-commons:$anko_version"
+    implementation 'com.android.support:design:27.1.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
