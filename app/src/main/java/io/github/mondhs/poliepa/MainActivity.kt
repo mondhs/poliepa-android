@@ -10,9 +10,12 @@ import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.os.Build
 import android.os.Handler
+import android.support.annotation.RequiresApi
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.support.v7.widget.TooltipCompat
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -24,7 +27,7 @@ import edu.cmu.pocketsphinx.RecognitionListener
 import edu.cmu.pocketsphinx.SpeechRecognizer
 import edu.cmu.pocketsphinx.SpeechRecognizerSetup
 import io.github.mondhs.poliepa.helper.LiepaRecognitionContext
-import io.github.mondhs.poliepa.helper.LiepaRecognitionHelper
+import io.github.mondhs.poliepa.helper.LiepaContextHelper
 import io.github.mondhs.poliepa.helper.LiepaTransportHelper
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.longToast
@@ -34,10 +37,16 @@ import java.io.IOException
 import java.lang.Exception
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_user_preference.view.*
+import kotlinx.coroutines.experimental.async
+import org.jetbrains.anko.custom.async
+import org.jetbrains.anko.onComplete
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeoutException
 
 
 /* Named searches allow to quickly reconfigure the decoder */
 private const val LIEPA_CMD = "liepa_commands"
+
 
 /* Used to handle permission request */
 private const val PERMISSIONS_REQUEST_RECORD_AUDIO = 1
@@ -45,14 +54,14 @@ private const val PERMISSIONS_REQUEST_RECORD_AUDIO = 1
 
 class MainActivity : AppCompatActivity(), RecognitionListener {
 
-    private val TAG = "MainActivity"
+    private val TAG = MainActivity::class.java.simpleName
 
 
     private var recognizer: SpeechRecognizer? = null
 
     private var liepaContext = LiepaRecognitionContext()
 
-    private val liepaHelper = LiepaRecognitionHelper()
+    private val liepaHelper = LiepaContextHelper()
 
     private val liepaTransportHelper = LiepaTransportHelper()
 
@@ -72,9 +81,7 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
         val aLiepaCtx = initContext()
         liepaContext = aLiepaCtx
 
-            val generatedNextWord = liepaHelper.nextWord(liepaContext)
-
-            ui_record_indication.setOnClickListener{
+        ui_record_indication_btn.setOnClickListener{
             if (recognizer != null) {
                 val requestRecordState = !liepaContext.isRecordingStarted
                 if(!requestRecordState){
@@ -140,33 +147,58 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
 
         // Recognizer initialization is a time-consuming and it involves IO,
         // so we execute it in async task
-        doAsync {
-            uiThread {
-                with(it) {
-                    Log.i(TAG, "[doRecognition]+++")
-                    it.setupRecognizer(liepaContext.audioDir.parentFile)
-                    if (recognizer != null) it.switchRecordingMode(false, liepaContext, recognizer!!)
-//                    longToast("Liepa klauso")
-                }
-            }
 
+        try{
+            doAsync({
+                Log.i(TAG, "[doRecognition] doAsync failed ", it)
+                setupRecognizer(liepaContext.audioDir.parentFile)
+                if (recognizer != null) switchRecordingMode(false, liepaContext, recognizer!!)
+                ui_new_phrase_progress.visibility = View.INVISIBLE
+
+                //proceed with local stuff
+            }) {
+
+                ui_new_phrase_progress.visibility = View.VISIBLE
+                Log.i(TAG, "[doRecognition] doAsync+++")
+                liepaHelper.updateCtxWithRemotePhrase(liepaContext, liepaContext.assetsDir)
+                onComplete {
+                    Log.i(TAG, "[doRecognition] onComplete +++")
+                    uiThread {
+                        with(it) {
+                            it.setupRecognizer(liepaContext.audioDir.parentFile)
+                            if (recognizer != null) it.switchRecordingMode(false, liepaContext, recognizer!!)
+                            ui_new_phrase_progress.visibility = View.INVISIBLE
+                            longToast("Liepa klauso")
+                        }
+                        Log.i(TAG, "[doRecognition] onComplete ---")
+                    }
+                }
+                Log.i(TAG, "[doRecognition] doAsync---")
+            }.get(3, TimeUnit.SECONDS)
+        }catch (e: TimeoutException){
+            Log.i(TAG, "[doRecognition] doAsync failed ", e)
+            setupRecognizer(liepaContext.audioDir.parentFile)
+            if (recognizer != null) switchRecordingMode(false, liepaContext, recognizer!!)
+            ui_new_phrase_progress.visibility = View.INVISIBLE
         }
+
     }
+
+
+
 
     @Throws(IOException::class)
     private fun setupRecognizer(assetsDir: File) {
 
         this.recognizer = SpeechRecognizerSetup.defaultSetup()
                 .setAcousticModel(File(assetsDir, "lt-lt-ptm"))
-                .setDictionary(File(assetsDir, "liepa-lt-lt.dict"))
+                .setDictionary(File(assetsDir, liepaContext.liepaCommandsDictionaryFileName))
                 .setRawLogDir(liepaContext.audioDir)
-//                .setString("-senlogdir",liepaContext.audioDir.path)
                 .recognizer
 
         recognizer?.addListener(this)
-//        recognizer?.decoder?.lattice.
+        recognizer?.addGrammarSearch(LIEPA_CMD, liepaContext.liepaCommandsGrammar)
 
-        recognizer?.addGrammarSearch(LIEPA_CMD, liepaContext.liepaCommandFile)
         liepaTransportHelper.prepareForRecognition(liepaContext.audioDir)
 
 
@@ -186,6 +218,8 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
 
     private fun shutdownRecognition() {
         Log.i(TAG, "[shutdownRecognition]+++")
+        ui_new_phrase_progress.visibility = View.INVISIBLE
+        uiThreadHandler.removeCallbacksAndMessages(null);
         recognizer?.let {
             it.cancel()
             it.shutdown()
@@ -196,19 +230,25 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
     }
 
 
+
     private fun onRecordingStop(){
-        ui_record_indication.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_ATOP)
+        ui_record_indication_btn.setCompoundDrawablesWithIntrinsicBounds( android.R.drawable.ic_btn_speak_now, 0, 0, 0); //setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_ATOP)
+        ui_record_indication_btn.setText("Pradėk įrašymą")
+        ui_pronounce_request_label.visibility  = View.INVISIBLE
     }
 
     private fun onRecordingStart(){
-        ui_record_indication.setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP)
+//        ui_record_indication_btn.setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP)
+        ui_record_indication_btn.setCompoundDrawablesWithIntrinsicBounds( android.R.drawable.ic_delete, 0, 0, 0);
+        ui_record_indication_btn.setText("Stabdyk įrašymą")
+        ui_pronounce_request_label.visibility  = View.VISIBLE
     }
 
     private fun startRecordingWithDelay(recognizer: SpeechRecognizer,liepaContext: LiepaRecognitionContext){
         val currentPhraseText = liepaContext.currentPhraseText
         Log.i(TAG, "[startRecordingWithDelay]+++ $currentPhraseText")
         val requestPhaseDelay =  liepaContext.requestPhaseDelayInSec*1000
-        val r = Runnable {
+        val runnableStartListening = Runnable {
             Log.i(TAG, "[startRecordingWithDelay] Handler +++ $currentPhraseText")
             ui_new_phrase_progress.visibility = View.INVISIBLE
             if(liepaContext.prefRecognitionAutomationInd){
@@ -220,43 +260,42 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
         ui_new_phrase_progress.visibility = View.VISIBLE
 
         uiThreadHandler.removeCallbacksAndMessages(null);
-        uiThreadHandler.postDelayed(r, requestPhaseDelay.toLong())
+        uiThreadHandler.postDelayed(runnableStartListening, requestPhaseDelay.toLong())
         Log.i(TAG, "[startRecordingWithDelay]--- $currentPhraseText ")
     }
 
 
     private fun switchRecordingMode(requestRecordState:Boolean, liepaContext: LiepaRecognitionContext, recognizer: SpeechRecognizer){
-        val isRecordingStarted = requestRecordState
         Log.i(TAG, "[switchRecordingMode]+++ $requestRecordState")
-        recognizer?.let {
 
-            if (requestRecordState && liepaContext.isRecordingStarted) {
-                if(liepaContext.prefRecognitionAutomationInd) {
-                    //for automatic continue recording
-                    it.stop()
-                    onRecordingStop()
-                    startRecordingWithDelay(it, liepaContext)
-                    onRecordingStart()
-                }else{
-                    //if it is recording and it was keep recording, assume we inverting indicator(stop recording)
-                    switchRecordingMode(false, liepaContext, recognizer)
-                }
-            }else if (requestRecordState && !liepaContext.isRecordingStarted) {
-                liepaContext.isRecordingStarted = true
-                startRecordingWithDelay(it, liepaContext)
-                onRecordingStart()
-            }else if (!requestRecordState && liepaContext.isRecordingStarted) {
-                //it is recording and requested to stop
-                liepaContext.isRecordingStarted = false
-                it.stop()
+
+        if (requestRecordState && liepaContext.isRecordingStarted) {
+            if(liepaContext.prefRecognitionAutomationInd) {
+                //for automatic continue recording
+                recognizer.stop()
                 onRecordingStop()
-                if(!liepaContext.prefRecognitionAutomationInd) {
-                    //request new phrase
-                    ui_pronounce_request_text.setText(liepaContext.currentPhraseText)
-                }
+                startRecordingWithDelay(recognizer, liepaContext)
+                onRecordingStart()
+            }else{
+                //if it is recording and it was keep recording, assume we inverting indicator(stop recording)
+                switchRecordingMode(false, liepaContext, recognizer)
             }
-            Log.i(TAG, "[switchRecordingMode]--- $requestRecordState")
+        }else if (requestRecordState && !liepaContext.isRecordingStarted) {
+            liepaContext.isRecordingStarted = true
+            startRecordingWithDelay(recognizer, liepaContext)
+            onRecordingStart()
+        }else if (!requestRecordState && liepaContext.isRecordingStarted) {
+            //it is recording and requested to stop
+            liepaContext.isRecordingStarted = false
+            recognizer.stop()
+            onRecordingStop()
+            if(!liepaContext.prefRecognitionAutomationInd) {
+                //request new phrase
+                ui_pronounce_request_text.setText(liepaContext.currentPhraseText)
+            }
         }
+        Log.i(TAG, "[switchRecordingMode]--- $requestRecordState")
+
 
     }
 
@@ -269,17 +308,17 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
         Log.i(TAG, "[onResult]+++")
         hypothesis?.let {
 
-            val recognizedCorrectly: Boolean = liepaHelper.isRecognized(liepaContext.previousPhraseText, it.hypstr)
-            val correctCmdRatio:Int = liepaHelper.updateRecognitionResult(liepaContext, it.hypstr)
+            val isRecognizedCorrectly: Boolean = liepaHelper.isRecognized(liepaContext.currentPhraseText, it.hypstr)
+            val correctCmdRatio:Int = liepaHelper.updateRecognitionResult(liepaContext, isRecognizedCorrectly)
 
             ui_recognition_result_view.progress = correctCmdRatio
             ui_result_stat.setText("%d/%d".format(liepaContext.phrasesCorrectNum, liepaContext.phrasesTestedNum))
             if(liepaContext.lastRecognitionWordsFound) {
-                liepaTransportHelper.processAudioFile(liepaContext, hypothesis, recognizedCorrectly);
+                liepaTransportHelper.processAudioFile(liepaContext, hypothesis, isRecognizedCorrectly);
             }
             ui_recognized_text.setText("%s (Prašyta: %s)".format(it.hypstr, liepaContext.currentPhraseText))
             //request new phrase
-            val generatedNextWord = liepaHelper.nextWord(liepaContext)
+            val generatedNextWord = liepaHelper.updateNextWord(liepaContext)
             if(liepaContext.prefRecognitionAutomationInd) {
                 ui_pronounce_request_text.setText("")
             }else{
@@ -402,7 +441,7 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
                         }
 
 
-                        LiepaRecognitionHelper().writeContext(liepaContext, preferences)
+                        LiepaContextHelper().writeContext(liepaContext, preferences)
 
                         verificationProcedureBeforeLounch()
 
@@ -468,8 +507,8 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
         // Handle presses on the action bar menu items
         when (item.itemId) {
             R.id.action_preference -> {
-                showRegistryDialog(liepaContext,this.getPreferences(Context.MODE_PRIVATE))
                 shutdownRecognition()
+                showRegistryDialog(liepaContext,this.getPreferences(Context.MODE_PRIVATE))
                 return true
             }
         }
