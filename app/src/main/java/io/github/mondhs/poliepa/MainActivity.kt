@@ -8,14 +8,9 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.content.pm.PackageManager
 import android.content.res.Resources
-import android.graphics.Color
-import android.graphics.PorterDuff
-import android.os.Build
 import android.os.Handler
-import android.support.annotation.RequiresApi
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
-import android.support.v7.widget.TooltipCompat
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -28,7 +23,7 @@ import edu.cmu.pocketsphinx.SpeechRecognizer
 import edu.cmu.pocketsphinx.SpeechRecognizerSetup
 import io.github.mondhs.poliepa.helper.LiepaRecognitionContext
 import io.github.mondhs.poliepa.helper.LiepaContextHelper
-import io.github.mondhs.poliepa.helper.LiepaTransportHelper
+import io.github.mondhs.poliepa.helper.LiepaTransportJsonHelper
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.uiThread
@@ -37,8 +32,6 @@ import java.io.IOException
 import java.lang.Exception
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_user_preference.view.*
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.custom.async
 import org.jetbrains.anko.onComplete
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
@@ -63,7 +56,7 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
 
     private val liepaHelper = LiepaContextHelper()
 
-    private val liepaTransportHelper = LiepaTransportHelper()
+    private val liepaTransportHelper = LiepaTransportJsonHelper()
 
 
     private var uiThreadHandler: Handler = Handler()

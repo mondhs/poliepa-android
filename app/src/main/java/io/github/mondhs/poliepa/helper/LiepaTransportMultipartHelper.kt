@@ -6,9 +6,9 @@ import java.io.File
 import java.net.URL
 import java.util.*
 
-class LiepaTransportHelper {
+class LiepaTransportMultipartHelper {
 
-    val TAG= LiepaTransportHelper::class.simpleName
+    val TAG= LiepaTransportMultipartHelper::class.simpleName
 
     fun prepareForRecognition(audioDir: File){
 
