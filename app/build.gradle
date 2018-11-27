@@ -37,8 +37,8 @@ android {
         applicationId "io.github.mondhs.poliepa"
         minSdkVersion 18
         targetSdkVersion 26
-        versionCode 5
-        versionName '2.1'
+        versionCode 6 
+        versionName '2.2'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
