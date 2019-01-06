@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/models/models.iml" filepath="$PROJECT_DIR$/models/models.iml" />
       <module fileurl="file://$PROJECT_DIR$/poliepa-android.iml" filepath="$PROJECT_DIR$/poliepa-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sphinxmodels/sphinxmodels.iml" filepath="$PROJECT_DIR$/sphinxmodels/sphinxmodels.iml" />
     </modules>
   </component>
 </project>

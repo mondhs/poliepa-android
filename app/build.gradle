@@ -38,9 +38,10 @@ android {
         minSdkVersion 18
         targetSdkVersion 26
         versionCode 6 
-        versionName '2.2'
+        versionName '2.3'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
+    vectorDrawables.useSupportLibrary = true
+}
     buildTypes {
         release {
             minifyEnabled false
@@ -50,7 +51,7 @@ android {
     }
     productFlavors {
     }
-    buildToolsVersion '27.0.3'
+    buildToolsVersion '28.0.3'
     testOptions {
         unitTests.returnDefaultValues = true
     }
@@ -58,7 +59,7 @@ android {
 
 dependencies {
     //    implementation project(':aars')
-    implementation project(':models')
+    implementation project(':sphinxmodels')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
@@ -67,9 +68,16 @@ dependencies {
     implementation "org.jetbrains.anko:anko:$anko_version"
     implementation "org.jetbrains.anko:anko-commons:$anko_version"
     implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.android.support:support-vector-drawable:27.1.1'
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.6.3'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation(name: 'pocketsphinx-android-5prealpha-release', ext: 'aar')
+    implementation(name: 'pocketsphinx-android-5prealpha_mg14-release', ext: 'aar')
+}
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
 }

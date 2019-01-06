@@ -1,0 +1,39 @@
+#JSGF V1.0;
+
+grammar patikra;
+
+public <COMMAND> =
+labas |
+labas rytas |
+labas vakaras |
+viso gero |
+malonu susipažinti |
+ačiū |
+kur yra prausykla |
+atsiprašau |
+gal jūs galite man padėti |
+kiek kainuoja  |
+sėkmės |
+kas tai |
+kaip galiu nuvykti |
+kur yra viešbutis |
+kur yra metro stotis |
+aš nesuprantu |
+atleiskite |
+aš esu iš lietuvos |
+mano vardas |
+susirgau |
+vieną minutę prašau |
+gerai |
+jūs juokaujate |
+ar galėtumėte |
+aš galiu tai padaryti pats |
+sveiki atvyke |
+kaip apie |
+geros kelionės |
+gero savaitgalio |
+šaunu |
+ar tu kalbi angliškai |
+jonas myli oną |
+ona myli joną |
+jau saulelė vėl atkopdama budino svietą ir žiemos šaltos trūsus pargraudama juokės;

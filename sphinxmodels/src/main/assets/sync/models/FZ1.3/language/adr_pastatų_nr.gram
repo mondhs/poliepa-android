@@ -1,0 +1,1230 @@
+#JSGF V1.0;
+
+grammar adresai;
+
+public <pastatų_numeriai> =
+vienas  |
+dešimt  |
+šimtas  |
+šimtas a |
+šimtas vienas  |
+šimtas vienas a |
+šimtas vienas be |
+šimtas du  |
+šimtas du a |
+šimtas du ce |
+šimtas trys  |
+šimtas trys a |
+šimtas keturi  |
+šimtas keturi a |
+šimtas penki  |
+šimtas penki a |
+šimtas penki be |
+šimtas šeši  |
+šimtas šeši a |
+šimtas šeši ce |
+šimtas septyni  |
+šimtas septyni a |
+šimtas aštuoni  |
+šimtas aštuoni a |
+šimtas devyni  |
+šimtas devyni a |
+dešimt a |
+dešimt be |
+dešimt ce |
+dešimt de |
+dešimt e |
+dešimt ef |
+dešimt ge |
+vienuolika  |
+šimtas dešimt  |
+šimtas dešimt a |
+šimtas vienuolika  |
+šimtas vienuolika a |
+šimtas vienuolika be |
+šimtas dvylika  |
+šimtas dvylika a |
+šimtas dvylika be |
+šimtas dvylika ce |
+šimtas trylika  |
+šimtas trylika a |
+šimtas keturioloka  |
+šimtas keturioloka a |
+šimtas keturioloka be |
+šimtas penkiolika  |
+šimtas penkiolika a |
+šimtas penkiolika be |
+šimtas penkiolika de |
+šimtas šešiolika  |
+šimtas šešiolika a |
+šimtas šešiolika be |
+šimtas šešiolika ce |
+šimtas šešiolika de |
+šimtas septynioloka  |
+šimtas septynioloka a |
+šimtas aštuoniolika  |
+šimtas aštuoniolika a |
+šimtas devyniolika  |
+šimtas devyniolika a |
+vienuolika a |
+vienuolika be |
+vienuolika ce |
+vienuolika de |
+vienuolika e |
+vienuolika ef |
+vienuolika ge |
+vienuolika haš |
+vienuolika ka |
+vienuolika el |
+vienuolika em |
+dvylika  |
+šimtas dvidešimt  |
+šimtas dvidešimt a |
+šimtas dvidešimt be |
+šimtas dvidešimt vienas  |
+šimtas dvidešimt vienas a |
+šimtas dvidešimt du  |
+šimtas dvidešimt du a |
+šimtas dvidešimt du be |
+šimtas dvidešimt trys  |
+šimtas dvidešimt trys a |
+šimtas dvidešimt trys be |
+šimtas dvidešimt keturi  |
+šimtas dvidešimt keturi a |
+šimtas dvidešimt penki  |
+šimtas dvidešimt penki a |
+šimtas dvidešimt šeši  |
+šimtas dvidešimt šeši a |
+šimtas dvidešimt šeši be |
+šimtas dvidešimt šeši de |
+šimtas dvidešimt septyni  |
+šimtas dvidešimt aštuoni  |
+šimtas dvidešimt aštuoni a |
+šimtas dvidešimt devyni  |
+dvylika a |
+dvylika be |
+dvylika ce |
+dvylika de |
+dvylika e |
+dvylika ef |
+dvylika haš |
+trylika  |
+šimtas trisdešimt  |
+šimtas trisdešimt a |
+šimtas trisdešimt vienas  |
+šimtas trisdešimt du  |
+šimtas trisdešimt du a |
+šimtas trisdešimt trys  |
+šimtas trisdešimt trys a |
+šimtas trisdešimt keturi  |
+šimtas trisdešimt keturi a |
+šimtas trisdešimt keturi be |
+šimtas trisdešimt penki  |
+šimtas trisdešimt penki a |
+šimtas trisdešimt penki be |
+šimtas trisdešimt šeši  |
+šimtas trisdešimt septyni  |
+šimtas trisdešimt aštuoni  |
+šimtas trisdešimt aštuoni a |
+šimtas trisdešimt devyni  |
+šimtas trisdešimt devyni a |
+šimtas trisdešimt devyni be |
+šimtas trisdešimt devyni e |
+trylika a |
+trylika be |
+trylika ce |
+trylika de |
+trylika ef |
+keturioloka  |
+šimtas keturiasdešimt  |
+šimtas keturiasdešimt a |
+šimtas keturiasdešimt be |
+šimtas keturiasdešimt vienas  |
+šimtas keturiasdešimt du  |
+šimtas keturiasdešimt trys  |
+šimtas keturiasdešimt trys a |
+šimtas keturiasdešimt keturi  |
+šimtas keturiasdešimt keturi a |
+šimtas keturiasdešimt keturi be |
+šimtas keturiasdešimt keturi ce |
+šimtas keturiasdešimt keturi de |
+šimtas keturiasdešimt penki  |
+šimtas keturiasdešimt penki a |
+šimtas keturiasdešimt šeši  |
+šimtas keturiasdešimt septyni  |
+šimtas keturiasdešimt aštuoni  |
+šimtas keturiasdešimt aštuoni a |
+šimtas keturiasdešimt devyni  |
+keturioloka a |
+keturioloka be |
+keturioloka ce |
+keturioloka de |
+keturioloka e |
+keturioloka ef |
+keturioloka ge |
+keturioloka i |
+penkiolika  |
+šimtas penkiasdešimt  |
+šimtas penkiasdešimt a |
+šimtas penkiasdešimt vienas  |
+šimtas penkiasdešimt vienas a |
+šimtas penkiasdešimt du  |
+šimtas penkiasdešimt du a |
+šimtas penkiasdešimt trys  |
+šimtas penkiasdešimt trys a |
+šimtas penkiasdešimt keturi  |
+šimtas penkiasdešimt keturi a |
+šimtas penkiasdešimt penki  |
+šimtas penkiasdešimt šeši  |
+šimtas penkiasdešimt šeši a |
+šimtas penkiasdešimt šeši be |
+šimtas penkiasdešimt šeši ce |
+šimtas penkiasdešimt šeši de |
+šimtas penkiasdešimt šeši e |
+šimtas penkiasdešimt šeši ef |
+šimtas penkiasdešimt šeši ge |
+šimtas penkiasdešimt septyni  |
+šimtas penkiasdešimt aštuoni  |
+šimtas penkiasdešimt aštuoni a |
+šimtas penkiasdešimt devyni  |
+šimtas penkiasdešimt devyni a |
+penkiolika a |
+penkiolika be |
+penkiolika ce |
+penkiolika de |
+penkiolika e |
+penkiolika ef |
+penkiolika ge |
+šešiolika  |
+šimtas šešiasdešimt  |
+šimtas šešiasdešimt a |
+šimtas šešiasdešimt be |
+šimtas šešiasdešimt ce |
+šimtas šešiasdešimt de |
+šimtas šešiasdešimt vienas  |
+šimtas šešiasdešimt vienas ce |
+šimtas šešiasdešimt du  |
+šimtas šešiasdešimt du a |
+šimtas šešiasdešimt du de |
+šimtas šešiasdešimt du e |
+šimtas šešiasdešimt trys  |
+šimtas šešiasdešimt trys a |
+šimtas šešiasdešimt trys be |
+šimtas šešiasdešimt trys ce |
+šimtas šešiasdešimt keturi  |
+šimtas šešiasdešimt penki  |
+šimtas šešiasdešimt penki a |
+šimtas šešiasdešimt penki be |
+šimtas šešiasdešimt penki ce |
+šimtas šešiasdešimt šeši  |
+šimtas šešiasdešimt šeši a |
+šimtas šešiasdešimt septyni  |
+šimtas šešiasdešimt septyni a |
+šimtas šešiasdešimt septyni be |
+šimtas šešiasdešimt septyni ce |
+šimtas šešiasdešimt septyni de |
+šimtas šešiasdešimt septyni e |
+šimtas šešiasdešimt septyni ef |
+šimtas šešiasdešimt aštuoni  |
+šimtas šešiasdešimt aštuoni a |
+šimtas šešiasdešimt devyni  |
+šešiolika a |
+šešiolika be |
+šešiolika ce |
+šešiolika de |
+šešiolika e |
+šešiolika ef |
+šešiolika ge |
+šešiolika haš |
+šešiolika i |
+šešiolika ka |
+septynioloka  |
+šimtas septyniasdesimt  |
+šimtas septyniasdesimt a |
+šimtas septyniasdesimt vienas  |
+šimtas septyniasdesimt du  |
+šimtas septyniasdesimt du a |
+šimtas septyniasdesimt du be |
+šimtas septyniasdesimt du ce |
+šimtas septyniasdesimt trys  |
+šimtas septyniasdesimt keturi  |
+šimtas septyniasdesimt keturi a |
+šimtas septyniasdesimt keturi be |
+šimtas septyniasdesimt keturi ce |
+šimtas septyniasdesimt keturi de |
+šimtas septyniasdesimt keturi er |
+šimtas septyniasdesimt penki  |
+šimtas septyniasdesimt šeši  |
+šimtas septyniasdesimt šeši a |
+šimtas septyniasdesimt septyni  |
+šimtas septyniasdesimt aštuoni  |
+šimtas septyniasdesimt aštuoni a |
+šimtas septyniasdesimt aštuoni be |
+šimtas septyniasdesimt aštuoni de |
+šimtas septyniasdesimt devyni  |
+septynioloka a |
+septynioloka be |
+septynioloka ce |
+septynioloka de |
+septynioloka e |
+septynioloka ef |
+septynioloka ge |
+aštuoniolika  |
+šimtas aštuoniasdešimt  |
+šimtas aštuoniasdešimt a |
+šimtas aštuoniasdešimt be |
+šimtas aštuoniasdešimt ce |
+šimtas aštuoniasdešimt vienas  |
+šimtas aštuoniasdešimt du  |
+šimtas aštuoniasdešimt du a |
+šimtas aštuoniasdešimt trys  |
+šimtas aštuoniasdešimt trys a |
+šimtas aštuoniasdešimt keturi  |
+šimtas aštuoniasdešimt penki  |
+šimtas aštuoniasdešimt šeši  |
+šimtas aštuoniasdešimt šeši a |
+šimtas aštuoniasdešimt šeši be |
+šimtas aštuoniasdešimt septyni  |
+šimtas aštuoniasdešimt septyni a |
+šimtas aštuoniasdešimt aštuoni  |
+šimtas aštuoniasdešimt aštuoni a |
+šimtas aštuoniasdešimt devyni  |
+šimtas aštuoniasdešimt devyni a |
+aštuoniolika a |
+aštuoniolika be |
+aštuoniolika ce |
+aštuoniolika de |
+aštuoniolika e |
+devyniolika  |
+šimtas devyniasdešimt  |
+šimtas devyniasdešimt vienas  |
+šimtas devyniasdešimt vienas a |
+šimtas devyniasdešimt du  |
+šimtas devyniasdešimt du a |
+šimtas devyniasdešimt du de |
+šimtas devyniasdešimt trys  |
+šimtas devyniasdešimt keturi  |
+šimtas devyniasdešimt penki  |
+šimtas devyniasdešimt šeši  |
+šimtas devyniasdešimt šeši a |
+šimtas devyniasdešimt šeši be |
+šimtas devyniasdešimt septyni  |
+šimtas devyniasdešimt septyni a |
+šimtas devyniasdešimt aštuoni  |
+šimtas devyniasdešimt aštuoni a |
+šimtas devyniasdešimt devyni  |
+šimtas devyniasdešimt devyni a |
+devyniolika a |
+devyniolika be |
+devyniolika ce |
+devyniolika de |
+devyniolika e |
+devyniolika ef |
+devyniolika ge |
+vienas a |
+vienas be |
+vienas ce |
+vienas de |
+vienas e |
+vienas ef |
+vienas ge |
+vienas haš |
+vienas i |
+vienas jot |
+vienas ka |
+vienas el |
+vienas em |
+vienas en |
+vienas pė |
+vienas er |
+vienas es |
+du  |
+dvidešimt  |
+du šimtai  |
+du šimtai vienas  |
+du šimtai vienas a |
+du šimtai vienas be |
+du šimtai vienas ce |
+du šimtai vienas de |
+du šimtai vienas e |
+du šimtai vienas ef |
+du šimtai vienas ge |
+du šimtai vienas haš |
+du šimtai vienas i |
+du šimtai vienas ka |
+du šimtai vienas el |
+du šimtai vienas em |
+du šimtai vienas en |
+du šimtai du  |
+du šimtai trys  |
+du šimtai keturi  |
+du šimtai keturi a |
+du šimtai keturi be |
+du šimtai keturi de |
+du šimtai penki  |
+du šimtai šeši  |
+du šimtai šeši be |
+du šimtai septyni  |
+du šimtai aštuoni  |
+du šimtai devyni  |
+dvidešimt a |
+dvidešimt be |
+dvidešimt ce |
+dvidešimt de |
+dvidešimt vienas  |
+du šimtai dešimt  |
+du šimtai dešimt a |
+du šimtai vienuolika  |
+du šimtai dvylika  |
+du šimtai dvylika a |
+du šimtai trylika  |
+du šimtai keturioloka  |
+du šimtai penkiolika  |
+du šimtai šešiolika  |
+du šimtai septynioloka  |
+du šimtai aštuoniolika  |
+du šimtai devyniolika  |
+du šimtai devyniolika a |
+du šimtai devyniolika ce |
+du šimtai devyniolika e |
+du šimtai devyniolika haš |
+dvidešimt vienas a |
+dvidešimt vienas be |
+dvidešimt vienas ce |
+dvidešimt vienas de |
+dvidešimt vienas e |
+dvidešimt vienas ef |
+dvidešimt vienas ge |
+dvidešimt vienas haš |
+dvidešimt vienas ka |
+dvidešimt vienas el |
+dvidešimt vienas em |
+dvidešimt du  |
+du šimtai dvidešimt  |
+du šimtai dvidešimt vienas  |
+du šimtai dvidešimt vienas be |
+du šimtai dvidešimt du  |
+du šimtai dvidešimt du a |
+du šimtai dvidešimt du be |
+du šimtai dvidešimt trys  |
+du šimtai dvidešimt keturi  |
+du šimtai dvidešimt penki  |
+du šimtai dvidešimt šeši  |
+du šimtai dvidešimt septyni  |
+du šimtai dvidešimt aštuoni  |
+du šimtai dvidešimt aštuoni a |
+du šimtai dvidešimt devyni  |
+dvidešimt du a |
+dvidešimt du be |
+dvidešimt du ce |
+dvidešimt du de |
+dvidešimt trys  |
+du šimtai trisdešimt  |
+du šimtai trisdešimt vienas  |
+du šimtai trisdešimt du  |
+du šimtai trisdešimt trys  |
+du šimtai trisdešimt keturi  |
+du šimtai trisdešimt keturi a |
+du šimtai trisdešimt penki  |
+du šimtai trisdešimt šeši  |
+du šimtai trisdešimt šeši a |
+du šimtai trisdešimt šeši be |
+du šimtai trisdešimt šeši ce |
+du šimtai trisdešimt šeši de |
+du šimtai trisdešimt šeši e |
+du šimtai trisdešimt šeši ef |
+du šimtai trisdešimt šeši ge |
+du šimtai trisdešimt septyni  |
+du šimtai trisdešimt aštuoni  |
+du šimtai trisdešimt aštuoni ce |
+du šimtai trisdešimt devyni  |
+dvidešimt trys a |
+dvidešimt trys be |
+dvidešimt trys ce |
+dvidešimt trys de |
+dvidešimt trys el |
+dvidešimt trys em |
+dvidešimt trys en |
+dvidešimt trys pė |
+dvidešimt trys er |
+dvidešimt trys te |
+dvidešimt keturi  |
+du šimtai keturiasdešimt  |
+du šimtai keturiasdešimt a |
+du šimtai keturiasdešimt vienas  |
+du šimtai keturiasdešimt du  |
+du šimtai keturiasdešimt trys  |
+du šimtai keturiasdešimt keturi  |
+du šimtai keturiasdešimt penki  |
+du šimtai keturiasdešimt šeši  |
+du šimtai keturiasdešimt šeši a |
+du šimtai keturiasdešimt septyni  |
+du šimtai keturiasdešimt septyni a |
+du šimtai keturiasdešimt aštuoni  |
+du šimtai keturiasdešimt devyni  |
+dvidešimt keturi a |
+dvidešimt keturi be |
+dvidešimt keturi ce |
+dvidešimt keturi de |
+dvidešimt keturi ka |
+dvidešimt penki  |
+du šimtai penkiasdešimt  |
+du šimtai penkiasdešimt a |
+du šimtai penkiasdešimt vienas  |
+du šimtai penkiasdešimt vienas a |
+du šimtai penkiasdešimt du  |
+du šimtai penkiasdešimt trys  |
+du šimtai penkiasdešimt keturi  |
+du šimtai penkiasdešimt penki  |
+du šimtai penkiasdešimt šeši  |
+du šimtai penkiasdešimt septyni  |
+du šimtai penkiasdešimt aštuoni  |
+du šimtai penkiasdešimt devyni  |
+du šimtai penkiasdešimt devyni a |
+dvidešimt penki a |
+dvidešimt penki be |
+dvidešimt penki ce |
+dvidešimt penki ge |
+dvidešimt penki haš |
+dvidešimt šeši  |
+du šimtai šešiasdešimt  |
+du šimtai šešiasdešimt vienas  |
+du šimtai šešiasdešimt du  |
+du šimtai šešiasdešimt trys  |
+du šimtai šešiasdešimt trys a |
+du šimtai šešiasdešimt trys be |
+du šimtai šešiasdešimt trys ce |
+du šimtai šešiasdešimt trys de |
+du šimtai šešiasdešimt trys e |
+du šimtai šešiasdešimt trys ef |
+du šimtai šešiasdešimt keturi  |
+du šimtai šešiasdešimt penki  |
+du šimtai šešiasdešimt šeši  |
+du šimtai šešiasdešimt septyni  |
+du šimtai šešiasdešimt aštuoni  |
+du šimtai šešiasdešimt devyni  |
+dvidešimt šeši a |
+dvidešimt šeši be |
+dvidešimt šeši ce |
+dvidešimt šeši de |
+dvidešimt šeši ge |
+dvidešimt septyni  |
+du šimtai septyniasdesimt  |
+du šimtai septyniasdesimt vienas  |
+du šimtai septyniasdesimt du  |
+du šimtai septyniasdesimt trys  |
+du šimtai septyniasdesimt keturi  |
+du šimtai septyniasdesimt keturi a |
+du šimtai septyniasdesimt penki  |
+du šimtai septyniasdesimt šeši  |
+du šimtai septyniasdesimt šeši a |
+du šimtai septyniasdesimt šeši be |
+du šimtai septyniasdesimt šeši ce |
+du šimtai septyniasdesimt septyni  |
+du šimtai septyniasdesimt aštuoni  |
+du šimtai septyniasdesimt devyni  |
+du šimtai septyniasdesimt devyni a |
+dvidešimt septyni a |
+dvidešimt septyni be |
+dvidešimt septyni ce |
+dvidešimt septyni de |
+dvidešimt septyni e |
+dvidešimt septyni ef |
+dvidešimt septyni ge |
+dvidešimt septyni ka |
+dvidešimt septyni el |
+dvidešimt septyni em |
+dvidešimt septyni en |
+dvidešimt aštuoni  |
+du šimtai aštuoniasdešimt  |
+du šimtai aštuoniasdešimt vienas  |
+du šimtai aštuoniasdešimt du  |
+du šimtai aštuoniasdešimt du a |
+du šimtai aštuoniasdešimt du be |
+du šimtai aštuoniasdešimt trys  |
+du šimtai aštuoniasdešimt trys a |
+du šimtai aštuoniasdešimt trys be |
+du šimtai aštuoniasdešimt keturi  |
+du šimtai aštuoniasdešimt keturi a |
+du šimtai aštuoniasdešimt keturi be |
+du šimtai aštuoniasdešimt penki  |
+du šimtai aštuoniasdešimt šeši  |
+du šimtai aštuoniasdešimt šeši a |
+du šimtai aštuoniasdešimt šeši be |
+du šimtai aštuoniasdešimt šeši ce |
+du šimtai aštuoniasdešimt septyni  |
+du šimtai aštuoniasdešimt aštuoni  |
+du šimtai aštuoniasdešimt aštuoni a |
+du šimtai aštuoniasdešimt aštuoni be |
+du šimtai aštuoniasdešimt devyni  |
+dvidešimt aštuoni a |
+dvidešimt aštuoni be |
+dvidešimt aštuoni ce |
+dvidešimt aštuoni de |
+dvidešimt aštuoni e |
+dvidešimt aštuoni ge |
+dvidešimt aštuoni haš |
+dvidešimt aštuoni ka |
+dvidešimt devyni  |
+du šimtai devyniasdešimt  |
+du šimtai devyniasdešimt vienas  |
+du šimtai devyniasdešimt du  |
+du šimtai devyniasdešimt du a |
+du šimtai devyniasdešimt du be |
+du šimtai devyniasdešimt du ce |
+du šimtai devyniasdešimt trys  |
+du šimtai devyniasdešimt keturi  |
+du šimtai devyniasdešimt keturi a |
+du šimtai devyniasdešimt keturi be |
+du šimtai devyniasdešimt keturi ce |
+du šimtai devyniasdešimt keturi de |
+du šimtai devyniasdešimt penki  |
+du šimtai devyniasdešimt šeši  |
+du šimtai devyniasdešimt septyni  |
+du šimtai devyniasdešimt septyni a |
+du šimtai devyniasdešimt aštuoni  |
+du šimtai devyniasdešimt aštuoni a |
+du šimtai devyniasdešimt aštuoni be |
+du šimtai devyniasdešimt aštuoni ce |
+du šimtai devyniasdešimt devyni  |
+dvidešimt devyni a |
+dvidešimt devyni be |
+dvidešimt devyni ce |
+dvidešimt devyni de |
+dvidešimt devyni e |
+dvidešimt devyni ge |
+dvidešimt devyni pė |
+dvidešimt devyni zet |
+du a |
+du be |
+du ce |
+du de |
+du e |
+du ef |
+du ge |
+du i |
+du jot |
+du ka |
+du em |
+du er |
+du te |
+du u |
+trys  |
+trisdešimt  |
+trys šimtai  |
+trys šimtai be |
+trys šimtai ce |
+trys šimtai de |
+trys šimtai e |
+trys šimtai ef |
+trys šimtai ge |
+trys šimtai haš |
+trys šimtai du  |
+trys šimtai du be |
+trys šimtai du ce |
+trys šimtai keturi  |
+trys šimtai penki  |
+trys šimtai šeši  |
+trys šimtai šeši a |
+trys šimtai šeši be |
+trys šimtai septyni  |
+trys šimtai aštuoni  |
+trys šimtai devyni  |
+trisdešimt a |
+trisdešimt be |
+trisdešimt ce |
+trisdešimt de |
+trisdešimt e |
+trisdešimt vienas  |
+trys šimtai dešimt  |
+trys šimtai dešimt a |
+trys šimtai vienuolika  |
+trys šimtai dvylika  |
+trys šimtai trylika  |
+trys šimtai keturioloka  |
+trys šimtai penkiolika  |
+trys šimtai penkiolika a |
+trys šimtai penkiolika be |
+trys šimtai penkiolika ce |
+trys šimtai šešiolika  |
+trys šimtai septynioloka  |
+trys šimtai septynioloka a |
+trys šimtai septynioloka be |
+trys šimtai aštuoniolika  |
+trys šimtai devyniolika  |
+trisdešimt vienas a |
+trisdešimt vienas be |
+trisdešimt vienas ce |
+trisdešimt vienas de |
+trisdešimt du  |
+trys šimtai dvidešimt  |
+trys šimtai dvidešimt vienas  |
+trys šimtai dvidešimt du  |
+trys šimtai dvidešimt trys  |
+trys šimtai dvidešimt trys a |
+trys šimtai dvidešimt keturi  |
+trys šimtai dvidešimt penki  |
+trys šimtai dvidešimt šeši  |
+trys šimtai dvidešimt septyni  |
+trys šimtai dvidešimt aštuoni  |
+trys šimtai dvidešimt devyni  |
+trisdešimt du a |
+trisdešimt du be |
+trisdešimt du ce |
+trisdešimt du de |
+trisdešimt du e |
+trisdešimt du ef |
+trisdešimt du ge |
+trisdešimt trys  |
+trys šimtai trisdešimt  |
+trys šimtai trisdešimt vienas  |
+trys šimtai trisdešimt vienas a |
+trys šimtai trisdešimt du  |
+trys šimtai trisdešimt trys  |
+trys šimtai trisdešimt keturi  |
+trys šimtai trisdešimt penki  |
+trys šimtai trisdešimt šeši  |
+trys šimtai trisdešimt septyni  |
+trys šimtai trisdešimt devyni  |
+trisdešimt trys a |
+trisdešimt trys be |
+trisdešimt trys ce |
+trisdešimt trys de |
+trisdešimt trys ef |
+trisdešimt keturi  |
+trys šimtai keturiasdešimt  |
+trys šimtai keturiasdešimt vienas  |
+trys šimtai keturiasdešimt du  |
+trys šimtai keturiasdešimt trys  |
+trys šimtai keturiasdešimt keturi  |
+trys šimtai keturiasdešimt penki  |
+trys šimtai keturiasdešimt šeši  |
+trys šimtai keturiasdešimt šeši a |
+trys šimtai keturiasdešimt septyni  |
+trys šimtai keturiasdešimt aštuoni  |
+trys šimtai keturiasdešimt aštuoni a |
+trys šimtai keturiasdešimt devyni  |
+trisdešimt keturi a |
+trisdešimt keturi be |
+trisdešimt keturi ce |
+trisdešimt keturi de |
+trisdešimt keturi e |
+trisdešimt keturi ef |
+trisdešimt penki  |
+trys šimtai penkiasdešimt  |
+trys šimtai penkiasdešimt vienas  |
+trys šimtai penkiasdešimt du  |
+trys šimtai penkiasdešimt trys  |
+trys šimtai penkiasdešimt keturi  |
+trys šimtai penkiasdešimt penki  |
+trys šimtai penkiasdešimt šeši  |
+trys šimtai penkiasdešimt septyni  |
+trys šimtai penkiasdešimt aštuoni  |
+trys šimtai penkiasdešimt aštuoni a |
+trys šimtai penkiasdešimt devyni  |
+trisdešimt penki a |
+trisdešimt penki be |
+trisdešimt penki ce |
+trisdešimt šeši  |
+trys šimtai šešiasdešimt  |
+trys šimtai šešiasdešimt vienas  |
+trys šimtai šešiasdešimt du  |
+trys šimtai šešiasdešimt trys  |
+trys šimtai šešiasdešimt keturi  |
+trys šimtai šešiasdešimt penki  |
+trys šimtai šešiasdešimt šeši  |
+trys šimtai šešiasdešimt septyni  |
+trys šimtai šešiasdešimt aštuoni  |
+trys šimtai šešiasdešimt devyni  |
+trys šimtai šešiasdešimt devyni a |
+trisdešimt šeši a |
+trisdešimt šeši be |
+trisdešimt šeši ce |
+trisdešimt šeši de |
+trisdešimt šeši e |
+trisdešimt šeši ef |
+trisdešimt šeši ge |
+trisdešimt septyni  |
+trys šimtai septyniasdesimt  |
+trys šimtai septyniasdesimt vienas  |
+trys šimtai septyniasdesimt du  |
+trys šimtai septyniasdesimt trys  |
+trys šimtai septyniasdesimt keturi  |
+trys šimtai septyniasdesimt penki  |
+trys šimtai septyniasdesimt šeši  |
+trys šimtai septyniasdesimt septyni  |
+trys šimtai septyniasdesimt aštuoni  |
+trys šimtai septyniasdesimt devyni  |
+trisdešimt septyni a |
+trisdešimt septyni be |
+trisdešimt septyni ce |
+trisdešimt septyni de |
+trisdešimt septyni e |
+trisdešimt septyni ef |
+trisdešimt septyni ge |
+trisdešimt aštuoni  |
+trys šimtai aštuoniasdešimt  |
+trys šimtai aštuoniasdešimt vienas  |
+trys šimtai aštuoniasdešimt du  |
+trys šimtai aštuoniasdešimt trys  |
+trys šimtai aštuoniasdešimt trys a |
+trys šimtai aštuoniasdešimt keturi  |
+trys šimtai aštuoniasdešimt penki  |
+trys šimtai aštuoniasdešimt šeši  |
+trys šimtai aštuoniasdešimt septyni  |
+trys šimtai aštuoniasdešimt aštuoni  |
+trisdešimt aštuoni a |
+trisdešimt aštuoni be |
+trisdešimt aštuoni ce |
+trisdešimt aštuoni de |
+trisdešimt devyni  |
+trys šimtai devyniasdešimt  |
+trys šimtai devyniasdešimt vienas  |
+trys šimtai devyniasdešimt du  |
+trys šimtai devyniasdešimt keturi  |
+trys šimtai devyniasdešimt šeši  |
+trys šimtai devyniasdešimt septyni  |
+trys šimtai devyniasdešimt aštuoni  |
+trys šimtai devyniasdešimt devyni  |
+trisdešimt devyni a |
+trisdešimt devyni be |
+trisdešimt devyni ce |
+trisdešimt devyni de |
+trisdešimt devyni e |
+trisdešimt devyni ef |
+trisdešimt devyni ge |
+trisdešimt devyni haš |
+trys a |
+trys be |
+trys ce |
+trys de |
+trys e |
+trys ef |
+trys ge |
+trys ka |
+trys em |
+trys en |
+keturi  |
+keturiasdešimt  |
+keturi šimtai  |
+keturi šimtai vienas  |
+keturi šimtai du  |
+keturi šimtai trys  |
+keturi šimtai keturi  |
+keturi šimtai šeši  |
+keturi šimtai septyni  |
+keturi šimtai aštuoni  |
+keturi šimtai devyni  |
+keturiasdešimt a |
+keturiasdešimt be |
+keturiasdešimt ce |
+keturiasdešimt de |
+keturiasdešimt e |
+keturiasdešimt el |
+keturiasdešimt vienas  |
+keturi šimtai dešimt  |
+keturi šimtai vienuolika  |
+keturi šimtai dvylika  |
+keturi šimtai trylika  |
+keturi šimtai keturioloka  |
+keturi šimtai penkiolika  |
+keturi šimtai šešiolika  |
+keturi šimtai septynioloka  |
+keturi šimtai aštuoniolika  |
+keturi šimtai devyniolika  |
+keturiasdešimt vienas a |
+keturiasdešimt vienas be |
+keturiasdešimt vienas ce |
+keturiasdešimt vienas ef |
+keturiasdešimt du  |
+keturi šimtai dvidešimt  |
+keturi šimtai dvidešimt vienas  |
+keturi šimtai dvidešimt du  |
+keturi šimtai dvidešimt trys  |
+keturi šimtai dvidešimt keturi  |
+keturi šimtai dvidešimt penki  |
+keturi šimtai dvidešimt šeši  |
+keturi šimtai dvidešimt septyni  |
+keturi šimtai dvidešimt aštuoni  |
+keturi šimtai dvidešimt devyni  |
+keturiasdešimt du a |
+keturiasdešimt du be |
+keturiasdešimt du ce |
+keturiasdešimt du de |
+keturiasdešimt du e |
+keturiasdešimt du ef |
+keturiasdešimt trys  |
+keturi šimtai trisdešimt  |
+keturi šimtai trisdešimt vienas  |
+keturi šimtai trisdešimt du  |
+keturi šimtai trisdešimt trys  |
+keturi šimtai trisdešimt keturi  |
+keturi šimtai trisdešimt penki  |
+keturi šimtai trisdešimt šeši  |
+keturi šimtai trisdešimt septyni  |
+keturi šimtai trisdešimt devyni  |
+keturiasdešimt trys a |
+keturiasdešimt trys be |
+keturiasdešimt trys ce |
+keturiasdešimt trys de |
+keturiasdešimt trys e |
+keturiasdešimt trys ef |
+keturiasdešimt trys ge |
+keturiasdešimt trys haš |
+keturiasdešimt trys i |
+keturiasdešimt trys jot |
+keturiasdešimt trys es |
+keturiasdešimt keturi  |
+keturi šimtai keturiasdešimt  |
+keturi šimtai keturiasdešimt vienas  |
+keturi šimtai keturiasdešimt du  |
+keturi šimtai keturiasdešimt trys  |
+keturi šimtai keturiasdešimt šeši  |
+keturi šimtai keturiasdešimt septyni  |
+keturi šimtai keturiasdešimt aštuoni  |
+keturi šimtai keturiasdešimt devyni  |
+keturiasdešimt keturi a |
+keturiasdešimt keturi be |
+keturiasdešimt penki  |
+keturi šimtai penkiasdešimt  |
+keturi šimtai penkiasdešimt vienas  |
+keturi šimtai penkiasdešimt du  |
+keturi šimtai penkiasdešimt trys  |
+keturi šimtai penkiasdešimt keturi  |
+keturi šimtai penkiasdešimt penki  |
+keturi šimtai penkiasdešimt šeši  |
+keturi šimtai penkiasdešimt septyni  |
+keturi šimtai penkiasdešimt aštuoni  |
+keturiasdešimt penki a |
+keturiasdešimt penki be |
+keturiasdešimt penki ce |
+keturiasdešimt penki de |
+keturiasdešimt penki e |
+keturiasdešimt penki ef |
+keturiasdešimt penki ge |
+keturiasdešimt penki ka |
+keturiasdešimt penki el |
+keturiasdešimt šeši  |
+keturi šimtai šešiasdešimt  |
+keturi šimtai šešiasdešimt vienas  |
+keturi šimtai šešiasdešimt du  |
+keturi šimtai šešiasdešimt keturi  |
+keturi šimtai šešiasdešimt šeši  |
+keturi šimtai šešiasdešimt septyni  |
+keturi šimtai šešiasdešimt aštuoni  |
+keturiasdešimt šeši a |
+keturiasdešimt šeši be |
+keturiasdešimt šeši ce |
+keturiasdešimt šeši de |
+keturiasdešimt šeši e |
+keturiasdešimt šeši ge |
+keturiasdešimt šeši haš |
+keturiasdešimt septyni  |
+keturi šimtai septyniasdesimt  |
+keturi šimtai septyniasdesimt vienas  |
+keturi šimtai septyniasdesimt du  |
+keturi šimtai septyniasdesimt trys  |
+keturi šimtai septyniasdesimt keturi  |
+keturi šimtai septyniasdesimt penki  |
+keturi šimtai septyniasdesimt šeši  |
+keturi šimtai septyniasdesimt septyni  |
+keturi šimtai septyniasdesimt aštuoni  |
+keturi šimtai septyniasdesimt devyni  |
+keturiasdešimt septyni a |
+keturiasdešimt septyni be |
+keturiasdešimt septyni ce |
+keturiasdešimt septyni de |
+keturiasdešimt septyni e |
+keturiasdešimt septyni ef |
+keturiasdešimt aštuoni  |
+keturi šimtai aštuoniasdešimt  |
+keturi šimtai aštuoniasdešimt vienas  |
+keturi šimtai aštuoniasdešimt du  |
+keturi šimtai aštuoniasdešimt keturi  |
+keturi šimtai aštuoniasdešimt šeši  |
+keturi šimtai aštuoniasdešimt aštuoni  |
+keturiasdešimt aštuoni a |
+keturiasdešimt aštuoni be |
+keturiasdešimt aštuoni ce |
+keturiasdešimt devyni  |
+keturi šimtai devyniasdešimt  |
+keturi šimtai devyniasdešimt du  |
+keturi šimtai devyniasdešimt keturi  |
+keturi šimtai devyniasdešimt šeši  |
+keturi šimtai devyniasdešimt aštuoni  |
+keturiasdešimt devyni a |
+keturiasdešimt devyni be |
+keturiasdešimt devyni ce |
+keturiasdešimt devyni de |
+keturiasdešimt devyni e |
+keturiasdešimt devyni ef |
+keturiasdešimt devyni ge |
+keturi a |
+keturi be |
+keturi ce |
+keturi de |
+keturi e |
+keturi ef |
+keturi ge |
+penki  |
+penkiasdešimt  |
+penki šimtai  |
+penki šimtai du  |
+penki šimtai keturi  |
+penki šimtai šeši  |
+penki šimtai aštuoni  |
+penkiasdešimt a |
+penkiasdešimt be |
+penkiasdešimt ce |
+penkiasdešimt vienas  |
+penki šimtai dešimt  |
+penki šimtai dvylika  |
+penkiasdešimt vienas a |
+penkiasdešimt vienas be |
+penkiasdešimt du  |
+penkiasdešimt du a |
+penkiasdešimt du be |
+penkiasdešimt du ce |
+penkiasdešimt trys  |
+penkiasdešimt trys a |
+penkiasdešimt trys be |
+penkiasdešimt trys ce |
+penkiasdešimt trys de |
+penkiasdešimt trys e |
+penkiasdešimt trys ef |
+penkiasdešimt trys ge |
+penkiasdešimt trys haš |
+penkiasdešimt trys jot |
+penkiasdešimt trys ka |
+penkiasdešimt keturi  |
+penkiasdešimt keturi a |
+penkiasdešimt keturi be |
+penkiasdešimt keturi ce |
+penkiasdešimt keturi de |
+penkiasdešimt penki  |
+penkiasdešimt penki a |
+penkiasdešimt penki be |
+penkiasdešimt penki ce |
+penkiasdešimt penki de |
+penkiasdešimt šeši  |
+penkiasdešimt šeši a |
+penkiasdešimt šeši be |
+penkiasdešimt šeši e |
+penkiasdešimt septyni  |
+penkiasdešimt septyni a |
+penkiasdešimt septyni be |
+penkiasdešimt septyni ce |
+penkiasdešimt septyni de |
+penkiasdešimt septyni haš |
+penkiasdešimt septyni i |
+penkiasdešimt septyni ka |
+penkiasdešimt aštuoni  |
+penkiasdešimt aštuoni a |
+penkiasdešimt devyni  |
+penkiasdešimt devyni a |
+penkiasdešimt devyni be |
+penkiasdešimt devyni ce |
+penki a |
+penki be |
+penki ce |
+penki de |
+penki e |
+penki ef |
+penki haš |
+penki jot |
+penki ka |
+penki el |
+penki em |
+penki en |
+penki pė |
+penki er |
+penki es |
+penki te |
+šeši  |
+šešiasdešimt  |
+šešiasdešimt a |
+šešiasdešimt be |
+šešiasdešimt ce |
+šešiasdešimt de |
+šešiasdešimt vienas  |
+šešiasdešimt vienas a |
+šešiasdešimt vienas be |
+šešiasdešimt vienas ce |
+šešiasdešimt vienas e |
+šešiasdešimt du  |
+šešiasdešimt du a |
+šešiasdešimt du be |
+šešiasdešimt trys  |
+šešiasdešimt trys a |
+šešiasdešimt trys be |
+šešiasdešimt trys de |
+šešiasdešimt trys e |
+šešiasdešimt trys ef |
+šešiasdešimt trys ge |
+šešiasdešimt trys haš |
+šešiasdešimt keturi  |
+šešiasdešimt keturi a |
+šešiasdešimt keturi be |
+šešiasdešimt keturi ce |
+šešiasdešimt penki  |
+šešiasdešimt penki a |
+šešiasdešimt penki be |
+šešiasdešimt penki ce |
+šešiasdešimt penki de |
+šešiasdešimt šeši  |
+šešiasdešimt šeši a |
+šešiasdešimt septyni  |
+šešiasdešimt septyni a |
+šešiasdešimt aštuoni  |
+šešiasdešimt aštuoni a |
+šešiasdešimt aštuoni be |
+šešiasdešimt aštuoni ce |
+šešiasdešimt aštuoni de |
+šešiasdešimt aštuoni e |
+šešiasdešimt aštuoni ef |
+šešiasdešimt aštuoni ge |
+šešiasdešimt aštuoni haš |
+šešiasdešimt devyni  |
+šešiasdešimt devyni a |
+šešiasdešimt devyni be |
+šeši a |
+šeši be |
+šeši ce |
+šeši de |
+šeši e |
+šeši ef |
+šeši ge |
+šeši haš |
+septyni  |
+septyniasdesimt  |
+septyniasdesimt a |
+septyniasdesimt ce |
+septyniasdesimt vienas  |
+septyniasdesimt vienas a |
+septyniasdesimt vienas be |
+septyniasdesimt du  |
+septyniasdesimt du a |
+septyniasdesimt du be |
+septyniasdesimt du ce |
+septyniasdesimt trys  |
+septyniasdesimt trys a |
+septyniasdesimt keturi  |
+septyniasdesimt keturi a |
+septyniasdesimt keturi be |
+septyniasdesimt keturi ce |
+septyniasdesimt keturi de |
+septyniasdesimt penki  |
+septyniasdesimt penki a |
+septyniasdesimt penki be |
+septyniasdesimt penki de |
+septyniasdesimt penki e |
+septyniasdesimt šeši  |
+septyniasdesimt šeši a |
+septyniasdesimt septyni  |
+septyniasdesimt septyni a |
+septyniasdesimt septyni be |
+septyniasdesimt septyni ce |
+septyniasdesimt septyni de |
+septyniasdesimt septyni e |
+septyniasdesimt aštuoni  |
+septyniasdesimt aštuoni a |
+septyniasdesimt devyni  |
+septyniasdesimt devyni a |
+septyniasdesimt devyni be |
+septyniasdesimt devyni ce |
+septyniasdesimt devyni de |
+septyniasdesimt devyni e |
+septyniasdesimt devyni ef |
+septyni a |
+septyni be |
+septyni ce |
+septyni de |
+septyni e |
+septyni ef |
+septyni ge |
+septyni haš |
+aštuoni  |
+aštuoniasdešimt  |
+aštuoniasdešimt a |
+aštuoniasdešimt be |
+aštuoniasdešimt ce |
+aštuoniasdešimt vienas  |
+aštuoniasdešimt vienas a |
+aštuoniasdešimt du  |
+aštuoniasdešimt du a |
+aštuoniasdešimt du be |
+aštuoniasdešimt du ce |
+aštuoniasdešimt du de |
+aštuoniasdešimt du e |
+aštuoniasdešimt trys  |
+aštuoniasdešimt trys a |
+aštuoniasdešimt keturi  |
+aštuoniasdešimt keturi a |
+aštuoniasdešimt keturi be |
+aštuoniasdešimt keturi ce |
+aštuoniasdešimt keturi de |
+aštuoniasdešimt penki  |
+aštuoniasdešimt penki a |
+aštuoniasdešimt penki be |
+aštuoniasdešimt penki ce |
+aštuoniasdešimt penki de |
+aštuoniasdešimt šeši  |
+aštuoniasdešimt šeši a |
+aštuoniasdešimt šeši be |
+aštuoniasdešimt šeši ce |
+aštuoniasdešimt šeši de |
+aštuoniasdešimt šeši e |
+aštuoniasdešimt šeši ef |
+aštuoniasdešimt septyni  |
+aštuoniasdešimt septyni a |
+aštuoniasdešimt septyni be |
+aštuoniasdešimt septyni ce |
+aštuoniasdešimt septyni de |
+aštuoniasdešimt aštuoni  |
+aštuoniasdešimt aštuoni a |
+aštuoniasdešimt aštuoni be |
+aštuoniasdešimt devyni  |
+aštuoniasdešimt devyni a |
+aštuoniasdešimt devyni be |
+aštuoni a |
+aštuoni be |
+aštuoni ce |
+aštuoni de |
+devyni  |
+devyniasdešimt  |
+devyniasdešimt a |
+devyniasdešimt be |
+devyniasdešimt ce |
+devyniasdešimt vienas  |
+devyniasdešimt vienas a |
+devyniasdešimt du  |
+devyniasdešimt du a |
+devyniasdešimt du be |
+devyniasdešimt trys  |
+devyniasdešimt trys a |
+devyniasdešimt trys be |
+devyniasdešimt keturi  |
+devyniasdešimt penki  |
+devyniasdešimt penki a |
+devyniasdešimt penki be |
+devyniasdešimt penki ce |
+devyniasdešimt šeši  |
+devyniasdešimt šeši a |
+devyniasdešimt septyni  |
+devyniasdešimt septyni a |
+devyniasdešimt septyni be |
+devyniasdešimt aštuoni  |
+devyniasdešimt aštuoni a |
+devyniasdešimt aštuoni be |
+devyniasdešimt aštuoni ce |
+devyniasdešimt devyni  |
+devyniasdešimt devyni a |
+devyniasdešimt devyni be |
+devyni a |
+devyni be |
+devyni ce |
+devyni de |
+devyni e |
+devyni ef |
+devyni ge |
+devyni haš;

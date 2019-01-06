@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <Button
+        android:id="@+id/ui_record_indication_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="64dp"
+        android:drawableRight="@android:drawable/ic_btn_speak_now"
+        android:text="Pradėk įrašymą"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <!--<TextView-->
+        <!--android:id="@+id/caption_text_label"-->
+        <!--android:layout_width="48dp"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_marginStart="16dp"-->
+        <!--android:ems="10"-->
+        <!--android:labelFor="@id/ui_recognized_text"-->
+        <!--app:layout_constraintBaseline_toBaselineOf="@+id/ui_recognized_text"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--android:text="Ištarta" />-->
+
+    <!--<EditText-->
+        <!--android:id="@+id/ui_recognized_text"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="16dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:ems="10"-->
+        <!--android:enabled="false"-->
+        <!--android:textColor="#000000"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toEndOf="@+id/caption_text_label" />-->
+
+
+    <EditText
+        android:id="@+id/ui_pronounce_request_text"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:gravity="left|top"
+        android:enabled="false"
+        android:inputType="none"
+        android:padding="8dp"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+        android:textColor="#000000"
+        android:textSize="42sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ui_pronounce_request_label"
+        tools:text="@tools:sample/lorem" />
+
+
+    <TextView
+        android:id="@+id/ui_pronounce_request_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Ištark frazę:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ui_record_indication_btn" />
+
+
+</android.support.constraint.ConstraintLayout>

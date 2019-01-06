@@ -14,18 +14,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".RecognitionAutomaticActivity"
+            android:parentActivityName=".MainActivity"
+            android:noHistory="false"
             android:windowSoftInputMode="stateHidden">
+        </activity>
+        <activity
+            android:name=".RecognitionManualActivity"
+            android:noHistory="false"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".UserPreferenceActivity"
+            android:parentActivityName=".MainActivity"
+            android:noHistory="false"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+        <activity android:name=".MainActivity"
+            android:noHistory="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".RecognitionHistoryActivity"
-            android:label="@string/title_activity_recognition_history"
-            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
