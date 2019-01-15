@@ -1,0 +1,200 @@
+#JSGF V1.0;
+
+grammar adr_element;
+
+public <adr_element> =
+agaro|
+agluonos|
+ajerų|
+akacijų takas|
+alyvų|
+alyvų takas|
+alksnyno|
+apaščios kranto|
+astravo|
+ateities|
+atgimimo|
+aukštaičių|
+aukštoji|
+aušros|
+aviečių|
+ąžuolyno|
+ąžuolo|
+ąžuolų takas|
+basanavičiaus|
+begonijų|
+beržų|
+bičiulių takas|
+bičių|
+bielinio|
+biliūno|
+binkio|
+birutės|
+bitės|
+dagilio|
+dauguviečio|
+daukanto|
+diemedžių takas|
+draugystės|
+dvaro|
+eglyno|
+ežero|
+gaisrininkų|
+gedimino|
+geležinkelio|
+genių|
+gėlių takas|
+gilių|
+gimnazijos|
+gluosnių|
+gvazdikų|
+ievų|
+ir yčų|
+jakubėno|
+janonio|
+jaunimo|
+jaunuolių|
+jazminų takas|
+jovaro|
+jurginų|
+kalno|
+kalpoko|
+karaimų|
+kareiviškių|
+kaštonų|
+kaulenio|
+kelmynės|
+kęstučio|
+kėnių takas|
+kilučių|
+klevų|
+klybo|
+kluono|
+kooperatininkų|
+kudirkos|
+laisvės|
+lakštingalų|
+lanksvų takas|
+latvygalos|
+lauko|
+lazdynų|
+lazdynų takas|
+lelijų|
+lemberto|
+liepalotų|
+lieptų|
+liepų|
+lietaus|
+ligoninės|
+ločerio|
+maironio|
+malūno|
+maumedžių|
+medžiotojų|
+melioratorių|
+mėtų|
+minties|
+montvilos|
+nastopkos|
+naujamiesčio|
+nėries|
+obelaukių|
+obelų|
+pabiržės|
+pakalnės|
+pakalnučių|
+palaukių|
+paparčių|
+parko|
+parodos|
+partizanų|
+pastaunyko|
+pastotės|
+pasvalio|
+paupio|
+pelargonijų|
+pelkių|
+pergalės|
+perkūno|
+pievų|
+pilies|
+pirties|
+plento|
+poškos|
+pušyno|
+pušų|
+pušų takas|
+putino takas|
+putinų|
+radvilos|
+ramioji|
+ramunių|
+reformatų|
+respublikos|
+rinkos|
+rytų|
+rotušės|
+rožių|
+rožių takas|
+rudėnų|
+ruoliškio|
+sabaliausko|
+saločių|
+salvijų|
+samanų takas|
+saulės|
+saulės takas|
+saulėtekio|
+sąjungos|
+sedulų takas|
+senolių|
+skaistkalnės|
+skratiškių|
+slyvų|
+smėlio|
+sodų|
+sodžiaus takas|
+sparnų|
+statybininkų|
+stoties|
+šaltalankio|
+šaltinio|
+šermukšnių|
+šilų|
+šimkaus|
+širvėnos|
+širvėnos takas|
+šviesos|
+švyturio|
+taikos|
+tarybų|
+tiekimo|
+tilto|
+tiškevičių|
+tylos|
+tujų|
+tulpių|
+tuopų|
+tvenkinio|
+upės|
+vabalninko|
+vakarų|
+vandens takas|
+vartų takas|
+vejos takas|
+veterinarijos|
+vėjo|
+vilniaus|
+vilties|
+vynuogių|
+vyšnių|
+vytauto|
+vyturio|
+žalgirio|
+žalioji|
+žemaitės|
+žemoji|
+žibučių|
+žiedų|
+žilvičių|
+žvejų;

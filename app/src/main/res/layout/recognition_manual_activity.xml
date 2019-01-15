@@ -20,28 +20,21 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <!--<TextView-->
-        <!--android:id="@+id/caption_text_label"-->
-        <!--android:layout_width="48dp"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_marginStart="16dp"-->
-        <!--android:ems="10"-->
-        <!--android:labelFor="@id/ui_recognized_text"-->
-        <!--app:layout_constraintBaseline_toBaselineOf="@+id/ui_recognized_text"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--android:text="Ištarta" />-->
-
-    <!--<EditText-->
-        <!--android:id="@+id/ui_recognized_text"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginStart="16dp"-->
-        <!--android:layout_marginEnd="8dp"-->
-        <!--android:ems="10"-->
-        <!--android:enabled="false"-->
-        <!--android:textColor="#000000"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toEndOf="@+id/caption_text_label" />-->
+    <ProgressBar
+        android:id="@+id/ui_record_level"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="15dp"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:max="32000"
+        android:progress="33"
+        android:progressDrawable="@drawable/progress_drawable"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ui_pronounce_request_text" />
 
 
     <EditText
@@ -53,8 +46,8 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
-        android:gravity="left|top"
         android:enabled="false"
+        android:gravity="left|top"
         android:inputType="none"
         android:padding="8dp"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
@@ -62,7 +55,7 @@
         android:textSize="42sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ui_record_level"
         app:layout_constraintTop_toBottomOf="@+id/ui_pronounce_request_label"
         tools:text="@tools:sample/lorem" />
 
@@ -71,10 +64,10 @@
         android:id="@+id/ui_pronounce_request_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="Ištark frazę:"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ui_record_level"
         app:layout_constraintTop_toBottomOf="@+id/ui_record_indication_btn" />
 
 

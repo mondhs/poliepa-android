@@ -1,10 +1,13 @@
 package io.github.mondhs.poliepa
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.content.pm.PackageManager
+import android.media.AudioManager
+import android.media.MediaRecorder
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.util.Log
@@ -104,7 +107,7 @@ class RecognitionAutomaticActivity : AppCompatActivity() {
             if (recognizer != null) switchRecordingMode(RecordStateRequest.RECORD, liepaContext, recognizer!!) //assume continue recording always
         }
 
-        override fun onPartialResult(hypothesis: Hypothesis?, samplesSeqNo:Long, timeFromStartMs:Long, maxSampleValue:Int) {
+        override fun onPartialResult(hypothesis: Hypothesis?, samplesSeqNo:Long, timeFromStartMs:Long) {
             hypothesis?.let {
                 Log.i(TAG, "[${this.uttno}][onPartialResult]+++ audioSamples: ${samplesSeqNo-this.uttStartFromSampelNo} processingTime = ${timeFromStartMs-this.uttStartTime}; timeFromStartMs=$timeFromStartMs; uttStartTime=${this.uttStartTime}")
                 ui_recognized_text.setText(it.hypstr)
@@ -136,15 +139,16 @@ class RecognitionAutomaticActivity : AppCompatActivity() {
             }
             liepaContext.lastRecognitionWordsFound = numberWordsWoSil > 2//do not count 2 segments of silence in beginning and end.
 
-
-//            if (recognizer != null) switchRecordingMode(true, liepaContext, recognizer!!)//assume continue recording always
-
-
         }
 
         override fun onError(error: Exception?) {
             Log.i(TAG, "[${this.uttno}][onError]+++ " + error?.message, error)
             ui_pronounce_request_text.setText(error?.message)
+        }
+
+        override fun onFrameProcessedEvent(samplesSeqNo:Long, maxSampleValue:Int){
+            ui_record_level.progress = maxSampleValue
+            Log.d(TAG, "[onFrameProcessedEvent ] maxSampleValue=$maxSampleValue")
         }
 
     }
@@ -208,10 +212,6 @@ class RecognitionAutomaticActivity : AppCompatActivity() {
             doAsync({
                 Log.i(TAG, "[doRecognition] doAsync failed ", it)
                 finish()
-//                setupRecognizer(liepaContext)
-//                if (recognizer != null) switchRecordingMode(false, liepaContext, recognizer!!)
-//                ui_read_phrase_progress.visibility = View.INVISIBLE
-
                 //proceed with local stuff
             }) {
 
@@ -240,20 +240,24 @@ class RecognitionAutomaticActivity : AppCompatActivity() {
     private fun setupRecognizer(liepaContext: LiepaRecognitionContext) {
         Log.d(TAG, "[setupRecognizer]+++")
         val performedInMils = measureTimeMillis {
+            val am = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+            am.setMode(4) //MODE_IN_COMMUNICATION
             this.recognizer = SpeechRecognizerSetup.defaultSetup()
+//                    .setInt("-audiosource",MediaRecorder.AudioSource.MIC.toDouble())
+                    .setInteger("-audiosource",MediaRecorder.AudioSource.VOICE_RECOGNITION)
                     .setAcousticModel(liepaHelper.findRecognitionAcousticModelFile(liepaContext))
                     .setDictionary(liepaHelper.findRecognitionDictionaryFile(liepaContext))
                     .setRawLogDir(liepaContext.audioDir)
                     .recognizer
 
             var languageModelFile = liepaHelper.findRecognitionLanguageModelFile(liepaContext)
-            if (Type.GRAM == Type.valueOf(liepaContext.recognitionModelType)) {
-                recognizer?.addGrammarSearch(LIEPA_CMD, languageModelFile)
-            } else if ( Type.LM == Type.valueOf(liepaContext.recognitionModelType)){
-                recognizer?.addNgramSearch(LIEPA_CMD, languageModelFile)
-            } else if ( Type.REMOTE == Type.valueOf(liepaContext.recognitionModelType)) {
-    //            recognizer?.addGrammarSearch(LIEPA_CMD, liepaContext.liepaCommandsGrammar)
-                TODO("Implement how remote services works. Should consume plain text instead of files.")
+            when (Type.valueOf(liepaContext.recognitionModelType)){
+                Type.GRAM -> recognizer?.addGrammarSearch(LIEPA_CMD, languageModelFile)
+                Type.LM -> recognizer?.addNgramSearch(LIEPA_CMD, languageModelFile)
+//                Type.REMOTE -> recognizer?.addGrammarSearch(LIEPA_CMD, liepaContext.liepaCommandsGrammar)
+                else -> {
+                    throw IllegalArgumentException("NOT Implemented")
+                }
             }
 
             recognizer?.addListener(recognitionListenerImpl)
@@ -276,7 +280,6 @@ class RecognitionAutomaticActivity : AppCompatActivity() {
     private fun shutdownRecognition() {
         Log.i(TAG, "[shutdownRecognition]+++")
         ui_read_phrase_progress.visibility = View.INVISIBLE
-//        countDownTimer.removeCallbacksAndMessages(null)
         countDownTimer?.cancel()
         recognizer?.let {
             it.cancel()
@@ -285,6 +288,8 @@ class RecognitionAutomaticActivity : AppCompatActivity() {
             liepaContext.isRecordingStarted = false
             longToast("Liepa atpažintuvas atjungtas")
         }
+        val am = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        am.setMode(1) //MODE_NORMAL
     }
 
 
@@ -297,10 +302,8 @@ class RecognitionAutomaticActivity : AppCompatActivity() {
     }
 
     private fun onRecordingStart() {
-//        ui_record_indication_btn.setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP)
         ui_record_indication_btn.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_delete, 0, 0, 0);
         ui_record_indication_btn.setText("Stok")
-//        ui_record_indication_btn.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.presence_away, 0, 0, 0)
         ui_user_instructions.visibility = View.VISIBLE
     }
 
@@ -310,9 +313,6 @@ class RecognitionAutomaticActivity : AppCompatActivity() {
 
         val currentPhraseText = liepaContext.currentPhraseText
         ui_pronounce_request_text.setText(currentPhraseText)
-//        ui_record_indication_btn.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.presence_away, 0, 0, 0)
-//        ui_record_indication_btn.setText("Persiskaityk tylai sau tekstą:")
-//        ui_pronounce_request_text.setCompoundDrawables(android.R.drawable.presence_away, 0, 0, 0);
         ui_user_instructions.setText("Persiskaityk tylai sau tekstą:")
         ui_user_instructions.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.presence_away, 0, 0, 0);
 
@@ -355,16 +355,6 @@ class RecognitionAutomaticActivity : AppCompatActivity() {
 
             }
         }.start()
-
-
-//        val runnableStartListening = Runnable {
-//
-//
-//        }
-
-
-//        countDownTimer.removeCallbacksAndMessages(null);
-//        countDownTimer.postDelayed(runnableStartListening, requestPhaseDelay.toLong())
         Log.i(TAG, "[?${recognitionListenerImpl.uttno+1}][startRecordingWithDelay]--- ")
     }
 

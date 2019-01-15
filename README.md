@@ -35,3 +35,9 @@ gradle assembleRelease
 ```
 
 Find file ```app/build/outputs/apk/release/app-release.apk```
+
+
+
+Extract raw files:
+
+~/Android/Sdk/platform-tools/adb pull /sdcard/Android/data/io.github.mondhs.poliepa/files/sync/audio/*.raw /tmp/audio

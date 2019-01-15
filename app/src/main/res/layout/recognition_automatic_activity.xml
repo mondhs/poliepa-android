@@ -19,20 +19,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ProgressBar
+        android:id="@+id/ui_record_level"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="15dp"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="8dp"
+        android:max="32000"
+        android:progress="33"
+        android:progressDrawable="@drawable/progress_drawable"
+        app:layout_constraintBottom_toBottomOf="@+id/ui_pronounce_request_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ui_pronounce_request_text" />
+
 
     <ProgressBar
         android:id="@+id/ui_read_phrase_progress"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:max="5000"
         android:progress="0"
         android:progressTint="@android:color/holo_orange_light"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ui_user_instructions" />
 
@@ -55,11 +68,12 @@
         android:id="@+id/caption_text_label"
         android:layout_width="48dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
         android:ems="10"
         android:labelFor="@id/ui_recognized_text"
         android:text="Ištarta"
-        app:layout_constraintBaseline_toBaselineOf="@+id/ui_recognized_text"
+        app:layout_constraintBottom_toTopOf="@+id/ui_pronounce_text_label"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
@@ -81,8 +95,8 @@
         android:id="@+id/ui_pronounce_text_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
 
+        android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
         android:text="Atpažinau"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -110,18 +124,18 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:padding="8dp"
         android:background="@android:color/transparent"
         android:ems="10"
         android:enabled="false"
         android:gravity="left|top"
         android:inputType="none"
+        android:padding="8dp"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
         android:textColor="#000000"
         android:textSize="42sp"
         app:layout_constraintBottom_toTopOf="@+id/ui_recognized_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ui_record_level"
         app:layout_constraintTop_toBottomOf="@+id/ui_read_phrase_progress"
         tools:text="@tools:sample/lorem" />
 

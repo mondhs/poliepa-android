@@ -37,8 +37,8 @@ android {
         applicationId "io.github.mondhs.poliepa"
         minSdkVersion 18
         targetSdkVersion 26
-        versionCode 6 
-        versionName '2.3'
+        versionCode 7
+        versionName '3.0'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     vectorDrawables.useSupportLibrary = true
 }
@@ -74,7 +74,7 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:2.6.3'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation(name: 'pocketsphinx-android-5prealpha_mg14-release', ext: 'aar')
+    implementation(name: 'pocketsphinx-android-5prealpha_mg15-release', ext: 'aar')
 }
 kotlin {
     experimental {

@@ -98,7 +98,7 @@ class RecognitionManualActivity : AppCompatActivity() {
             }
         }
 
-        override fun onPartialResult(hypothesis: Hypothesis?, samplesSeqNo:Long, timeFromStartMs:Long, maxSampleValue:Int) {
+        override fun onPartialResult(hypothesis: Hypothesis?, samplesSeqNo:Long, timeFromStartMs:Long) {
             hypothesis?.let{
                 Log.i(TAG, "[onPartialResult]+++")
                 lastPartialResultTime = timeFromStartMs
@@ -127,6 +127,11 @@ class RecognitionManualActivity : AppCompatActivity() {
         override fun onError(error: Exception?) {
             Log.i(TAG, "[onError]+++ " + error?.message, error)
             ui_pronounce_request_text.setText(error?.message)
+        }
+
+        override fun onFrameProcessedEvent(samplesSeqNo:Long, maxSampleValue:Int){
+            ui_record_level.progress = maxSampleValue
+            Log.d(TAG, "[onFrameProcessedEvent ] maxSampleValue=$maxSampleValue")
         }
     }
 
