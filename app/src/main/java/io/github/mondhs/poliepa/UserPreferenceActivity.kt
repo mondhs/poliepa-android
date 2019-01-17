@@ -10,7 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import io.github.mondhs.poliepa.helper.LiepaContextHelper
 import kotlinx.android.synthetic.main.user_preference_activity.*
-import org.jetbrains.anko.sdk25.coroutines.onCheckedChange
+import org.jetbrains.anko.sdk27.coroutines.onCheckedChange
 import android.widget.ArrayAdapter
 import io.github.mondhs.poliepa.helper.LiepaRecognitionContext
 import io.github.mondhs.poliepa.helper.RecognitionModel
@@ -48,6 +48,7 @@ class UserPreferenceActivity : AppCompatActivity() {
         ui_user_age_group.setSelection(ageGroupIdx)
         ui_show_recognition_ind.isChecked = liepaContext.prefRecognitionAutomationInd
         ui_requestPhaseDelayInSecSeekBar.progress = liepaContext.requestPhaseDelayInSec
+
 
 
         ui_show_recognition_ind.onCheckedChange { _, isChecked ->

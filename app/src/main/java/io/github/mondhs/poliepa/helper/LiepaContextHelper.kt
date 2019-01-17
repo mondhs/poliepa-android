@@ -145,6 +145,8 @@ class LiepaContextHelper{
             return
         }
         val languageModelFile = findRecognitionLanguageModelFile(ctx)
+        if(!languageModelFile.exists()) return
+
         val recognitionPhrasesFile = findRecognitionPhrasesFile(ctx)
         val recognitionModelType = Type.valueOf(ctx.recognitionModelType)
         ctx.activeCommandList.clear()

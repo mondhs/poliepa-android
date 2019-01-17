@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.content.pm.PackageManager
 import android.media.AudioManager
 import android.media.MediaRecorder
+import android.os.Build
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.util.Log
@@ -240,8 +241,7 @@ class RecognitionAutomaticActivity : AppCompatActivity() {
     private fun setupRecognizer(liepaContext: LiepaRecognitionContext) {
         Log.d(TAG, "[setupRecognizer]+++")
         val performedInMils = measureTimeMillis {
-            val am = getSystemService(Context.AUDIO_SERVICE) as AudioManager
-            am.setMode(4) //MODE_IN_COMMUNICATION
+
             this.recognizer = SpeechRecognizerSetup.defaultSetup()
 //                    .setInt("-audiosource",MediaRecorder.AudioSource.MIC.toDouble())
                     .setInteger("-audiosource",MediaRecorder.AudioSource.VOICE_RECOGNITION)
@@ -249,6 +249,8 @@ class RecognitionAutomaticActivity : AppCompatActivity() {
                     .setDictionary(liepaHelper.findRecognitionDictionaryFile(liepaContext))
                     .setRawLogDir(liepaContext.audioDir)
                     .recognizer
+
+
 
             var languageModelFile = liepaHelper.findRecognitionLanguageModelFile(liepaContext)
             when (Type.valueOf(liepaContext.recognitionModelType)){
@@ -288,8 +290,6 @@ class RecognitionAutomaticActivity : AppCompatActivity() {
             liepaContext.isRecordingStarted = false
             longToast("Liepa atpažintuvas atjungtas")
         }
-        val am = getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        am.setMode(1) //MODE_NORMAL
     }
 
 
@@ -332,10 +332,10 @@ class RecognitionAutomaticActivity : AppCompatActivity() {
             override fun onTick(millisUntilFinished: Long) {
                 ui_read_phrase_progress.progress = requestPhaseDelayMsec.toInt()-millisUntilFinished.toInt()
                 //start recording 0.4 second earlier than announced, to gather background noise
-                if(millisUntilFinished<500 && !isStarted){
+                if(millisUntilFinished<100 && !isStarted){
                     isStarted = true
                     Log.i(TAG, "[?${recognitionListenerImpl.uttno+1}][startRecordingWithDelay][onTick]  start recording $currentPhraseText")
-                    recognizer.startListening(LIEPA_CMD, 1000)//wait till phrase is pronounced up to x second
+                    recognizer.startListening(LIEPA_CMD, 2000)//wait till phrase is pronounced up to x second
                 }
             }
             override fun onFinish() {
@@ -343,7 +343,7 @@ class RecognitionAutomaticActivity : AppCompatActivity() {
                 if(!isStarted){
                     isStarted = true
                     Log.i(TAG, "[?${recognitionListenerImpl.uttno+1}][startRecordingWithDelay][onFinish] This should never happen as recordingshould be started 2 sec earlier for $currentPhraseText")
-                    recognizer.startListening(LIEPA_CMD, 1000)//wait till phrase is pronounced up to x second
+                    recognizer.startListening(LIEPA_CMD, 2000)//wait till phrase is pronounced up to x second
                 }
                 Log.i(TAG, "[?${recognitionListenerImpl.uttno+1}][startRecordingWithDelay][onFinish] announce about recording $currentPhraseText")
                 ui_read_phrase_progress.visibility = View.INVISIBLE
@@ -410,10 +410,18 @@ class RecognitionAutomaticActivity : AppCompatActivity() {
     private fun checkPermissionForRecognition(): Boolean {
         Log.i(TAG, "[checkPermissionForRecognition]+++")
 
+
         val permissionAudioCheck = ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.RECORD_AUDIO)
-        if (permissionAudioCheck != PackageManager.PERMISSION_GRANTED) {
+        if (permissionAudioCheck != PackageManager.PERMISSION_GRANTED ) {
             ActivityCompat.requestPermissions(this,
                     arrayOf(Manifest.permission.RECORD_AUDIO),
+                    PERMISSIONS_REQUEST_RECORD_AUDIO)
+            return false
+        }
+        val modifyAudioSettingCheck = ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.MODIFY_AUDIO_SETTINGS)
+        if (modifyAudioSettingCheck != PackageManager.PERMISSION_GRANTED ) {
+            ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.MODIFY_AUDIO_SETTINGS),
                     PERMISSIONS_REQUEST_RECORD_AUDIO)
             return false
         }

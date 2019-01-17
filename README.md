@@ -39,5 +39,6 @@ Find file ```app/build/outputs/apk/release/app-release.apk```
 
 
 Extract raw files:
-
+~/Android/Sdk/platform-tools/adb shell ls -1 /sdcard/Android/data/io.github.mondhs.poliepa/files/sync/audio
 ~/Android/Sdk/platform-tools/adb pull /sdcard/Android/data/io.github.mondhs.poliepa/files/sync/audio/*.raw /tmp/audio
+aplay -f S16_LE -r 16000 000000003.raw

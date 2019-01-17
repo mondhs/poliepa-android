@@ -11,9 +11,9 @@ import io.github.mondhs.poliepa.helper.LiepaContextHelper
 import io.github.mondhs.poliepa.helper.LiepaRecognitionContext
 import io.github.mondhs.poliepa.helper.RecognitionModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.user_preference_activity.*
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.sdk25.coroutines.onClick
+import org.jetbrains.anko.sdk27.coroutines.onClick
+
 
 class MainActivity : AppCompatActivity() {
 
