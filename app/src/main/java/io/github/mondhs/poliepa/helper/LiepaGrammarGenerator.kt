@@ -2,6 +2,7 @@ package io.github.mondhs.poliepa.helper
 
 class LiepaGrammarGenerator{
     companion object {
+        val supportedSymbolsRe = "[^aąbcčdeęėfghiįxyjklmnopqrsštuųūvwzž1234567890\\s\\n]+".toRegex()
         const private val GRAMMAR_FORMAT = """#JSGF V1.0;
 
 grammar auto_generated_grammar;
@@ -15,7 +16,10 @@ public <COMMAND> =
      * generate from phrases to grammar format
      */
     fun generateGrammarFromPhrases(phrases:List<String>): String {
-        return GRAMMAR_FORMAT.format(phrases.joinToString (" |\n"))
+        val cleanedPhrases = phrases.map {
+            supportedSymbolsRe.replace(it, "")
+        }
+        return GRAMMAR_FORMAT.format(cleanedPhrases.joinToString (" |\n"))
     }
 
     /**

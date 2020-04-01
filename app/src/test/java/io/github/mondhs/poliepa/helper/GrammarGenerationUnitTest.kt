@@ -27,6 +27,21 @@ labas rytas;"""
         //then
         Assert.assertEquals("Grammar result", Companion.RESULT_GRAMMAR, result)
     }
+    @Test
+    fun shouldGenerateGrammarFromPhrasesUnknownSymbols() {
+        //given
+        val phrases = "qw2x!@#\\$%^&*()as".split(",")
+        val generator = LiepaGrammarGenerator()
+        //when
+        val result = generator.generateGrammarFromPhrases(phrases)
+        //then
+        Assert.assertEquals("Grammar result", """#JSGF V1.0;
+
+grammar auto_generated_grammar;
+
+public <COMMAND> =
+qw2xas;""", result)
+    }
 
     @Test
     fun shouldExtractUniqueWordsFromGrammar() {

@@ -12,6 +12,7 @@ unesco=junesko"""
 //                """^ie=jie
 //sb=zb"""
 
+        val supportedSymbolsRe = "[^aąbcčdeęėfghiįxyjklmnopqrsštuųūvwzž1234567890\\s\\n]+".toRegex()
 
         val wordReplaceMap = mutableMapOf<String, String>()
         val graphemeGroupReplacementMap = linkedMapOf<String, String>(
@@ -212,6 +213,7 @@ unesco=junesko"""
                 "n" to "N",
                 "o" to "O_",
                 "p" to "P",
+                "q" to "K U",//Liepa2
                 "r" to "R",
                 "s" to "S",
                 "š" to "S2",
@@ -221,8 +223,20 @@ unesco=junesko"""
                 "ū" to "U_",
                 "v" to "V",
                 "w" to "V",
+                "x" to "K S",//Liepa2
                 "z" to "Z",
-                "ž" to "Z2"
+                "ž" to "Z2",
+                "0" to "N U L I S",
+                "1" to "V I E N A S",
+                "2" to "D U",
+                "3" to "T R I_ S",
+                "4" to "K E T U R I",
+                "5" to "P E N K I",
+                "6" to "S2 E S2 I",
+                "7" to "S E P T I_ N I",
+                "8" to "A S2 T U O_ N I",
+                "9" to "D E V I_ N I"
+
         )
     }
 //    val graphemeReplacementMap = mutableMapOf<Char,String>()
@@ -245,9 +259,10 @@ unesco=junesko"""
         return dictionary.map { it.first to it.second }.sortedBy { it.first }.toMap()
     }
 
-    public fun transcribeDictionary(inputWords:String):Map<String,String>{
+    fun transcribeDictionary(inputWords:String):Map<String,String>{
         var dictionary = mutableListOf<Pair<String,String>>()
         var words = inputWords.toLowerCase()
+        words = supportedSymbolsRe.replace(words, "")
         for (word in words.split(" ".toRegex())){
             dictionary.add(Pair(word, transcribeWord(word)))
         }
@@ -262,9 +277,9 @@ unesco=junesko"""
 
     private fun transcribeWord(word:String): String{
         //1.Word replacement: correct spelling
-        var spelledWord = wordReplaceMap.get(word) ?: word
+        var spelledWord = wordReplaceMap[word] ?: word
         //2 group of grapheme fixing spelling
-        graphemeGroupReplacementMap.forEach { t, u -> spelledWord  = spelledWord .replace(t.toRegex(), u + " ") }
+        graphemeGroupReplacementMap.forEach { (t, u) ->  spelledWord  = spelledWord .replace(t.toRegex(), u + " ")}
         return spelledWord.trim()
     }
 }

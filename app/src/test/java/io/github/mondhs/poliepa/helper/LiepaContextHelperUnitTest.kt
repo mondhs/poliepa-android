@@ -20,11 +20,15 @@ class LiepaContextHelperUnitTest {
     labas rytas ;"""
     }
     private val helper = LiepaContextHelper()
+    private val grammarGenerator = LiepaGrammarGenerator()
+
 
     @Test
     fun shouldSetupLolcalContext(){
         val givenCtx = LiepaRecognitionContext()
-        helper.setupLocalPhrase(givenCtx, Companion.GIVEN_GRAMMAR)
+//        helper.setupLocalPhrase(givenCtx, Companion.GIVEN_GRAMMAR)
+        givenCtx.allCommandList.addAll(grammarGenerator.extractPhrasesFromGrammar(Companion.GIVEN_GRAMMAR))
+//      ctx.allCommandList.addAll(grammarGenerator.extractPhrasesFromGrammar(ctx.liepaCommandsGrammar))
         assertEquals("List of result", 2, givenCtx.allCommandList.size.toLong())
         assertEquals("List of result", 0, givenCtx.activeCommandList.size.toLong())
     }
@@ -32,11 +36,12 @@ class LiepaContextHelperUnitTest {
     @Test
     fun shouldGetNextWord(){
         val givenCtx = LiepaRecognitionContext()
-        helper.setupLocalPhrase(givenCtx, Companion.GIVEN_GRAMMAR)
+//        helper.setupLocalPhrase(givenCtx, Companion.GIVEN_GRAMMAR)
+        givenCtx.allCommandList.addAll(grammarGenerator.extractPhrasesFromGrammar(Companion.GIVEN_GRAMMAR))
         val result: MutableList<String> = mutableListOf()
 
         for (i in mutableListOf(1,2,3,4)){
-            var currentWord = helper.nextWord(givenCtx)
+            var currentWord = helper.updateNextWord(givenCtx)
             result.add(currentWord)
         }
         result.sort()
@@ -47,16 +52,18 @@ class LiepaContextHelperUnitTest {
     @Test
     fun shouldCompareRecognitionResults(){
         val givenCtx = LiepaRecognitionContext()
-        helper.setupLocalPhrase(LiepaRecognitionContext(), Companion.GIVEN_GRAMMAR)
-        givenCtx.previousPhraseText = "labas"
+//        helper.setupLocalPhrase(LiepaRecognitionContext(), Companion.GIVEN_GRAMMAR)
+        givenCtx.allCommandList.addAll(grammarGenerator.extractPhrasesFromGrammar(Companion.GIVEN_GRAMMAR))
+        givenCtx.currentPhraseText = "labas"
 
-        var result = helper.updateRecognitionResult(givenCtx, "labas")
+
+        var result = helper.updateRecognitionResult(givenCtx, isRecognizedCorrectly = true)
         assertEquals("Recognition correct ratio", 100, result)
 
-        result = helper.updateRecognitionResult(givenCtx, "labas1")
+        result = helper.updateRecognitionResult(givenCtx, isRecognizedCorrectly = false)
         assertEquals("Recognition correct ratio", 50, result)
 
-        result = helper.updateRecognitionResult(givenCtx, "labas")
+        result = helper.updateRecognitionResult(givenCtx, isRecognizedCorrectly = true)
         assertEquals("Recognition correct ratio", 66, result)
 
 
