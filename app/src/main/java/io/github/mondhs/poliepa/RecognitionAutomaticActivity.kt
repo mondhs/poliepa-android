@@ -80,7 +80,7 @@ class RecognitionAutomaticActivity : AppCompatActivity() {
                 val correctCmdRatio: Int = liepaHelper.updateRecognitionResult(liepaContext, isRecognizedCorrectly)
 
                 ui_recognition_result_view.progress = correctCmdRatio
-                ui_result_stat.setText("%d/%d".format(liepaContext.phrasesCorrectNum, liepaContext.phrasesTestedNum))
+                ui_result_stat.text = "%d/%d".format(liepaContext.phrasesCorrectNum, liepaContext.phrasesTestedNum)
 
 
                 val timeCpuRatio = (timeFromStartMs-this.uttStartTime)/((samplesSeqNo-this.uttStartFromSampelNo)/16.0)
@@ -252,7 +252,7 @@ class RecognitionAutomaticActivity : AppCompatActivity() {
 
 
 
-            var languageModelFile = liepaHelper.findRecognitionLanguageModelFile(liepaContext)
+            val languageModelFile = liepaHelper.findRecognitionLanguageModelFile(liepaContext)
             when (Type.valueOf(liepaContext.recognitionModelType)){
                 Type.GRAM -> recognizer?.addGrammarSearch(LIEPA_CMD, languageModelFile)
                 Type.LM -> recognizer?.addNgramSearch(LIEPA_CMD, languageModelFile)
@@ -294,16 +294,16 @@ class RecognitionAutomaticActivity : AppCompatActivity() {
 
 
     private fun onRecordingStop() {
-        ui_record_indication_btn.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_btn_speak_now, 0, 0, 0); //setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_ATOP)
-        ui_record_indication_btn.setText("Pradėk įrašymą")
+        ui_record_indication_btn.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_btn_speak_now, 0, 0, 0) //setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_ATOP)
+        ui_record_indication_btn.text = "Pradėk įrašymą"
         ui_user_instructions.visibility = View.INVISIBLE
         ui_pronounce_request_text.setBackgroundColor( ContextCompat.getColor(applicationContext, android.R.color.transparent) )
         ui_pronounce_request_text.setText("")
     }
 
     private fun onRecordingStart() {
-        ui_record_indication_btn.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_delete, 0, 0, 0);
-        ui_record_indication_btn.setText("Stok")
+        ui_record_indication_btn.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_delete, 0, 0, 0)
+        ui_record_indication_btn.text = "Stok"
         ui_user_instructions.visibility = View.VISIBLE
     }
 
@@ -313,8 +313,8 @@ class RecognitionAutomaticActivity : AppCompatActivity() {
 
         val currentPhraseText = liepaContext.currentPhraseText
         ui_pronounce_request_text.setText(currentPhraseText)
-        ui_user_instructions.setText("Persiskaityk tylai sau tekstą:")
-        ui_user_instructions.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.presence_away, 0, 0, 0);
+        ui_user_instructions.text = "Persiskaityk tylai sau tekstą:"
+        ui_user_instructions.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.presence_away, 0, 0, 0)
 
 
         Log.i(TAG, "[?${recognitionListenerImpl.uttno+1}][startRecordingWithDelay]+++ ")
@@ -349,8 +349,8 @@ class RecognitionAutomaticActivity : AppCompatActivity() {
                 ui_read_phrase_progress.visibility = View.INVISIBLE
 //                ui_record_indication_btn.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.presence_online, 0, 0, 0);
                 ui_pronounce_request_text.setBackgroundColor( ContextCompat.getColor(applicationContext,  R.color.colorPrimary) )
-                ui_user_instructions.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.presence_online, 0, 0, 0);
-                ui_user_instructions.setText("Ištark garsiai tekstą:")
+                ui_user_instructions.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.presence_online, 0, 0, 0)
+                ui_user_instructions.text = "Ištark garsiai tekstą:"
 
 
             }
